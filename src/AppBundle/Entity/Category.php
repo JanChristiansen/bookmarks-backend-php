@@ -33,5 +33,5 @@ class Category
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      * @ORM\OneToMany(targetEntity="Bookmark", mappedBy="category")
      */
-    protected $category;
+    protected $bookmarks;
 }

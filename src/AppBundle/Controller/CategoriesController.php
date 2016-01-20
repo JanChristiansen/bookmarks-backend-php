@@ -2,25 +2,25 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Bookmark;
+use AppBundle\Entity\Category;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class BookmarksController extends FOSRestController
+class CategoriesController extends FOSRestController
 {
     /**
      * @Nelmio\ApiDoc()
      *
-     * @return Bookmark[]
+     * @return Category[]
      */
-    public function getBookmarksAction()
+    public function getCategoriesAction()
     {
         return [
-            new Bookmark(),
-            new Bookmark(),
-            new Bookmark(),
-            new Bookmark(),
+            new Category(),
+            new Category(),
+            new Category(),
+            new Category(),
         ];
     }
 

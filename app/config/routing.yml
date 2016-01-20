@@ -2,6 +2,10 @@ bookmarks:
     resource: AppBundle\Controller\BookmarksController
     type:     rest
 
+categories:
+    resource: AppBundle\Controller\CategoriesController
+    type:     rest
+
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
