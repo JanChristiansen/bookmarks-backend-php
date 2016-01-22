@@ -16,12 +16,8 @@ class CategoriesController extends FOSRestController
      */
     public function getCategoriesAction()
     {
-        return [
-            new Category(),
-            new Category(),
-            new Category(),
-            new Category(),
-        ];
+        return $this->getDoctrine()->getRepository('AppBundle:Category')->childrenHierarchy();
     }
+
 
 }
