@@ -3,9 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BookmarkRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BookmarkEntityRepository")
  * @ORM\Table()
  */
 class Bookmark
@@ -16,6 +17,7 @@ class Bookmark
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"tree", "bookmark"})
      */
     protected $id;
 
@@ -23,6 +25,7 @@ class Bookmark
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"tree", "bookmark"})
      */
     protected $name;
 
@@ -30,6 +33,7 @@ class Bookmark
      * @var string
      *
      * @ORM\Column(type="string", length=10000)
+     * @JMS\Groups({"tree", "bookmark"})
      */
     protected $url;
 
@@ -37,6 +41,7 @@ class Bookmark
      * @var int
      *
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"tree", "bookmark"})
      */
     protected $clicks;
 
@@ -52,8 +57,20 @@ class Bookmark
      * @var int
      *
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"tree", "bookmark"})
      */
     protected $position;
+
+    /**
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -183,5 +200,19 @@ class Bookmark
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @JMS\Groups({"bookmark"})
+     * @JMS\VirtualProperty
+     * @return int|null
+     */
+    public function getCategoryId()
+    {
+        if ($this->category) {
+            return $this->category->getId();
+        }
+
+        return null;
     }
 }

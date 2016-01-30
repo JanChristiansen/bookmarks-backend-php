@@ -1,5 +1,5 @@
 bookmarks:
-    resource: AppBundle\Controller\BookmarksController
+    resource: app.controller.bookmarks
     type:     rest
 
 categories:

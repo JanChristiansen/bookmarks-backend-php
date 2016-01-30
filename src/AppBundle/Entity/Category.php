@@ -5,11 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @Gedmo\Tree(type="nested")
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryEntityRepository")
  * @ORM\Table()
  */
 class Category
@@ -20,6 +21,7 @@ class Category
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"tree"})
      */
     protected $id;
 
@@ -27,6 +29,7 @@ class Category
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"tree"})
      */
     protected $name;
 
@@ -64,6 +67,7 @@ class Category
     /**
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
+     * @JMS\Groups({"tree"})
      */
     private $children;
 
@@ -72,6 +76,7 @@ class Category
      *
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      * @ORM\OneToMany(targetEntity="Bookmark", mappedBy="category")
+     * @JMS\Groups({"tree"})
      */
     protected $bookmarks;
 

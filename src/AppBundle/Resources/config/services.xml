@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="app.controller.bookmarks.class">AppBundle\Controller\BookmarksController</parameter>
+    </parameters>
+
+    <services>
+        <service class="%app.controller.bookmarks.class%" id="app.controller.bookmarks">
+            <call method="setContainer">
+                <argument id="service_container" type="service"/>
+            </call>
+            <argument type="service" id="app.repository.bookmarks"/>
+        </service>
+
+        <service class="AppBundle\Repository\BookmarkEntityRepository" id="app.repository.bookmarks">
+            <factory service="doctrine.orm.entity_manager" method="getRepository" />
+            <argument>AppBundle\Entity\Bookmark</argument>
+        </service>
+    </services>
+</container>

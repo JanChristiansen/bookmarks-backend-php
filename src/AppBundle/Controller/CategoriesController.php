@@ -11,6 +11,7 @@ class CategoriesController extends FOSRestController
 {
     /**
      * @Nelmio\ApiDoc()
+     * @Rest\View(serializerGroups={"tree"})
      *
      * @return Category[]
      */
