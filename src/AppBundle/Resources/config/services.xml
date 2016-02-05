@@ -17,6 +17,7 @@
                 <argument id="service_container" type="service"/>
             </call>
             <argument type="service" id="app.repository.bookmarks"/>
+            <argument type="service" id="app.service.bookmark"/>
         </service>
 
         <service class="%app.repository.bookmarks.class%" id="app.repository.bookmarks">

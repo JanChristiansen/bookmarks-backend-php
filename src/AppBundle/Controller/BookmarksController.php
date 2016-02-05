@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
 use AppBundle\Interfaces\Repository\BookmarkRepository;
+use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -17,11 +18,18 @@ class BookmarksController extends FOSRestController
     private $bookmarkRepository;
 
     /**
-     * @param BookmarkRepository $bookmarkRepository
+     * @var BookmarkService
      */
-    public function __construct(BookmarkRepository $bookmarkRepository)
+    private $bookmarkService;
+
+    /**
+     * @param BookmarkRepository $bookmarkRepository
+     * @param BookmarkService $bookmarkService
+     */
+    public function __construct(BookmarkRepository $bookmarkRepository, BookmarkService $bookmarkService)
     {
         $this->bookmarkRepository = $bookmarkRepository;
+        $this->bookmarkService = $bookmarkService;
     }
 
     /**
@@ -32,7 +40,7 @@ class BookmarksController extends FOSRestController
      */
     public function getBookmarksAction()
     {
-        return $this->get('app.service.bookmark')->getTree();
+        return $this->bookmarkService->getTree();
     }
 
     /**
