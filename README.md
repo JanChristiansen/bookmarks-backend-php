@@ -1,11 +1,8 @@
 
-logik aus getBookmarksAction in service
-
+s
 user handling erstmal nur in memory in yml
 
 routing.xml ins bundle
-
-services.xml repoclass
 
 bm controller aufräumen
 
