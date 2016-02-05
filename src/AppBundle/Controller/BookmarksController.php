@@ -32,7 +32,7 @@ class BookmarksController extends FOSRestController
      */
     public function getBookmarksAction()
     {
-        return $this->get('app.services.bookmark')->getTree();
+        return $this->get('app.service.bookmark')->getTree();
     }
 
     /**

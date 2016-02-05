@@ -27,6 +27,7 @@ class BookmarkService
     public function getTree()
     {
         //$root = null;
+        $root = $this->categoryRepository->find(1);
         $root = $this->categoryRepository->find(56);
         $tree = $this->categoryRepository->getChildren($root, true);
 
