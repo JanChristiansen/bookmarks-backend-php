@@ -1,4 +1,14 @@
-.checkout
-=========
 
-A Symfony project created on January 20, 2016, 8:36 pm.
+logik aus getBookmarksAction in service
+
+user handling erstmal nur in memory in yml
+
+routing.xml ins bundle
+
+services.xml repoclass
+
+bm controller aufräumen
+
+dann nach github mit dem scheiß :)
+
+api best practices

@@ -32,11 +32,7 @@ class BookmarksController extends FOSRestController
      */
     public function getBookmarksAction()
     {
-        $userRepository = $this->get('doctrine')->getRepository(Category::class);
-        //$root = null;
-        $root = $userRepository->find(56);
-
-        return $this->getDoctrine()->getRepository('AppBundle:Category')->getChildren($root, true);
+        return $this->get('app.services.bookmark')->getTree();
     }
 
     /**

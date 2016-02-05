@@ -34,30 +34,36 @@ class Category
     protected $name;
 
     /**
+     * @var int
      * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer")
      */
     private $lft;
 
     /**
+     * @var int
      * @Gedmo\TreeLevel
      * @ORM\Column(name="lvl", type="integer")
      */
     private $lvl;
 
     /**
+     * @var int
      * @Gedmo\TreeRight
      * @ORM\Column(name="rgt", type="integer")
      */
     private $rgt;
 
     /**
+     * @var ints
      * @Gedmo\TreeRoot
      * @ORM\Column(name="root", type="integer", nullable=true)
      */
     private $root;
 
     /**
+     * @var Category
+     *
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
@@ -65,6 +71,8 @@ class Category
     private $parent;
 
     /**
+     * @var Category[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      * @JMS\Groups({"tree"})
@@ -161,7 +169,7 @@ class Category
     /**
      * Get bookmarks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Bookmark[]|\Doctrine\Common\Collections\Collection
      */
     public function getBookmarks()
     {
@@ -233,7 +241,7 @@ class Category
     }
 
     /**
-     * @return mixed
+     * @return Category
      */
     public function getParent()
     {
@@ -241,15 +249,15 @@ class Category
     }
 
     /**
-     * @param mixed $parent
+     * @param Category $parent
      */
-    public function setParent($parent)
+    public function setParent(Category $parent)
     {
         $this->parent = $parent;
     }
 
     /**
-     * @return mixed
+     * @return Category[]
      */
     public function getChildren()
     {
@@ -257,9 +265,9 @@ class Category
     }
 
     /**
-     * @param mixed $children
+     * @param Category[] $children
      */
-    public function setChildren($children)
+    public function setChildren(array $children)
     {
         $this->children = $children;
     }

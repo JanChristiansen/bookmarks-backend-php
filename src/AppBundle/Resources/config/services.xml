@@ -6,6 +6,9 @@
 
     <parameters>
         <parameter key="app.controller.bookmarks.class">AppBundle\Controller\BookmarksController</parameter>
+        <parameter key="app.repository.bookmarks.class">AppBundle\Repository\BookmarkEntityRepository</parameter>
+        <parameter key="app.repository.categories.class">AppBundle\Repository\CategoryEntityRepository</parameter>
+        <parameter key="app.service.bookmarks.class">AppBundle\Services\BookmarkService</parameter>
     </parameters>
 
     <services>
@@ -16,9 +19,18 @@
             <argument type="service" id="app.repository.bookmarks"/>
         </service>
 
-        <service class="AppBundle\Repository\BookmarkEntityRepository" id="app.repository.bookmarks">
+        <service class="%app.repository.bookmarks.class%" id="app.repository.bookmarks">
             <factory service="doctrine.orm.entity_manager" method="getRepository" />
             <argument>AppBundle\Entity\Bookmark</argument>
+        </service>
+
+        <service class="%app.repository.categories.class%" id="app.repository.category">
+            <factory service="doctrine.orm.entity_manager" method="getRepository" />
+            <argument>AppBundle\Entity\Category</argument>
+        </service>
+
+        <service class="%app.service.bookmarks.class%" id="app.services.bookmark" >
+            <argument type="service" id="app.repository.category"/>
         </service>
     </services>
 </container>
