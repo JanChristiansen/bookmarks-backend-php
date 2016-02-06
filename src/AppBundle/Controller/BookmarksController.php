@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bookmark;
-use AppBundle\Entity\Category;
 use AppBundle\Interfaces\Repository\BookmarkRepository;
 use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;

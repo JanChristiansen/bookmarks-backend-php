@@ -22,7 +22,7 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
         $root->setName('root');
         $root->setId(self::ROOT_ID);
         $manager->persist($root);
-        $this->addReference('category-root', $root);
+        $this->addReference('tree-category-root', $root);
 
         /** @var Category[] $children1 */
         $children1 = array();
