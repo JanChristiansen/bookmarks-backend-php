@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests\Functional\Controller;
 
+use AppBundle\Controller\BookmarksController;
 use AppBundle\DataFixtures\ORM\LoadFullTreeBookmarksData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeCategoriesData;
 use AppBundle\Tests\Functional\WebTestCase;
@@ -13,6 +14,12 @@ class BookmarksControllerTest extends WebTestCase
         $this->client = static::createClient(array('debug' => false));
 
         $this->loadFixtures(array(LoadFullTreeCategoriesData::class, LoadFullTreeBookmarksData::class));
+    }
+
+    public function testServiceDefinition()
+    {
+        $controller = $this->getContainer()->get('app.controller.bookmarks');
+        $this->assertInstanceOf(BookmarksController::class, $controller);
     }
 
     public function testGetBookmarksAction()

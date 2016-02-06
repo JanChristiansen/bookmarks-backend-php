@@ -1,5 +1,5 @@
+category controller DI
 
-s
 user handling erstmal nur in memory in yml
 
 routing.xml ins bundle

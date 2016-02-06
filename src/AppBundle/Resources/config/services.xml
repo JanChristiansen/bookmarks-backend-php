@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="app.controller.bookmarks.class">AppBundle\Controller\BookmarksController</parameter>
+        <parameter key="app.controller.categories.class">AppBundle\Controller\CategoriesController</parameter>
         <parameter key="app.repository.bookmarks.class">AppBundle\Repository\BookmarkEntityRepository</parameter>
         <parameter key="app.repository.categories.class">AppBundle\Repository\CategoryEntityRepository</parameter>
         <parameter key="app.service.bookmark.class">AppBundle\Services\BookmarkService</parameter>
@@ -18,6 +19,13 @@
             </call>
             <argument type="service" id="app.repository.bookmarks"/>
             <argument type="service" id="app.service.bookmark"/>
+        </service>
+
+        <service class="%app.controller.categories.class%" id="app.controller.categories">
+            <call method="setContainer">
+                <argument id="service_container" type="service"/>
+            </call>
+            <argument id="app.repository.category" type="service"/>
         </service>
 
         <service class="%app.repository.bookmarks.class%" id="app.repository.bookmarks">

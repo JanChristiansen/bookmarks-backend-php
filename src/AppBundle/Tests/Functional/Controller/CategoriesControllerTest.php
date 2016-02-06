@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests\Functional\Controller;
 
+use AppBundle\Controller\CategoriesController;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
 use AppBundle\Tests\Functional\WebTestCase;
 
@@ -12,6 +13,12 @@ class CategoriesControllerTest extends WebTestCase
         $this->client = static::createClient(array('debug' => false));
 
         $this->loadFixtures(array(LoadCategoriesData::class));
+    }
+
+    public function testServiceDefinition()
+    {
+        $controller = $this->getContainer()->get('app.controller.categories');
+        $this->assertInstanceOf(CategoriesController::class, $controller);
     }
 
     public function testGetCategoriesAction()

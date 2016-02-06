@@ -3,7 +3,7 @@ bookmarks:
     type:     rest
 
 categories:
-    resource: AppBundle\Controller\CategoriesController
+    resource: app.controller.categories
     type:     rest
 
 NelmioApiDocBundle:
