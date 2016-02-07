@@ -3,6 +3,7 @@
 namespace AppBundle\Services;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use Entity\Repository\CategoryRepository;
 
 class BookmarkService
@@ -22,13 +23,12 @@ class BookmarkService
     }
 
     /**
+     * @param User $user
      * @return array
      */
-    public function getTree()
+    public function getTree(User $user)
     {
-        //$root = null;
-        $root = $this->categoryRepository->find(1);
-        //$root = $this->categoryRepository->find(56);
+        $root = $user->getRootCategory();
         $tree = $this->categoryRepository->getChildren($root, true);
 
         return $tree;

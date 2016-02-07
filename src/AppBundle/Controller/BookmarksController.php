@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bookmark;
+use AppBundle\Entity\User;
 use AppBundle\Interfaces\Repository\BookmarkRepository;
 use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -39,7 +40,10 @@ class BookmarksController extends FOSRestController
      */
     public function getBookmarksAction()
     {
-        return $this->bookmarkService->getTree();
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->bookmarkService->getTree($user);
     }
 
     /**

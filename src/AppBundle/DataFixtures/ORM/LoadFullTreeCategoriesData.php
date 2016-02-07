@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtureInterface
 {
     const ROOT_ID = 999;
+    const TREE_CATEGORY_ROOT = 'tree-category-root';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -22,7 +23,7 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
         $root->setName('root');
         $root->setId(self::ROOT_ID);
         $manager->persist($root);
-        $this->addReference('tree-category-root', $root);
+        $this->addReference(self::TREE_CATEGORY_ROOT, $root);
 
         /** @var Category[] $children1 */
         $children1 = array();

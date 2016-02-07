@@ -22,10 +22,15 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user->setUsername('smoon');
         $user->setPassword('$2y$12$x7bhfEzapTx.SMviQpMwNe7hNV3HELtNcdYpLdGFwT/yGTn.wycXS');
         $user->setRootCategory($this->getReference(LoadCategoriesData::CATEGORY_ROOT));
-
         $this->setReference('user', $user);
-
         $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setRootCategory($this->getReference(LoadFullTreeCategoriesData::TREE_CATEGORY_ROOT));
+        $this->setReference('user', $user);
+        $manager->persist($user);
+
         $manager->flush();
     }
 

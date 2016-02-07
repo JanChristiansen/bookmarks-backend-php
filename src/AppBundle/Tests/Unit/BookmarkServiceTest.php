@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Unit;
 
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryEntityRepository;
 use AppBundle\Services\BookmarkService;
 use AppBundle\Tests\Functional\Repository\CategoryRepositoryTest;
@@ -14,6 +15,10 @@ class BookmarkServiceTest extends \PHPUnit_Framework_TestCase
     {
         $root = new Category();
         $root->setId(1);
+
+        $user = new User();
+        $user->setUsername('test');
+        $user->setRootCategory($root);
 
         $firstChild = new Category();
         $firstChild->setId(2);
@@ -36,11 +41,10 @@ class BookmarkServiceTest extends \PHPUnit_Framework_TestCase
         $children = array($firstChild, $secondChild);
 
         $categoryRepository = $this->getMockWithoutInvokingTheOriginalConstructor(CategoryEntityRepository::class);
-        $categoryRepository->expects($this->once())->method('find')->with(56)->willReturn($root);
-        $categoryRepository->expects($this->once())->method('getChildren')->with($root, true)->willReturn($children);
+        $categoryRepository->expects($this->once())->method('getChildren')->with($user->getRootCategory(), true)->willReturn($children);
 
         $service = new BookmarkService($categoryRepository);
-        $actualTree = $service->getTree();
+        $actualTree = $service->getTree($user);
 
         $this->assertEquals($children, $actualTree);
     }
