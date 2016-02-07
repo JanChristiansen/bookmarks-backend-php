@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\UserEntityRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserEntityRepository")
  */
 class User implements UserInterface, \Serializable
 {
@@ -35,6 +35,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @var Category
+     *
+     * @ORM\OneToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="root_category", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $rootCategory;
 
     public function __construct()
     {
@@ -124,6 +132,30 @@ class User implements UserInterface, \Serializable
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    /**
+     * Set rootCategory
+     *
+     * @param \AppBundle\Entity\Category $rootCategory
+     *
+     * @return User
+     */
+    public function setRootCategory(\AppBundle\Entity\Category $rootCategory = null)
+    {
+        $this->rootCategory = $rootCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get rootCategory
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getRootCategory()
+    {
+        return $this->rootCategory;
     }
 
     /**

@@ -21,6 +21,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user = new User();
         $user->setUsername('smoon');
         $user->setPassword('$2y$12$x7bhfEzapTx.SMviQpMwNe7hNV3HELtNcdYpLdGFwT/yGTn.wycXS');
+        $user->setRootCategory($this->getReference(LoadCategoriesData::CATEGORY_ROOT));
 
         $this->setReference('user', $user);
 

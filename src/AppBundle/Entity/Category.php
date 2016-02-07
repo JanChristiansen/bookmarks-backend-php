@@ -55,7 +55,7 @@ class Category
     private $rgt;
 
     /**
-     * @var ints
+     * @var int
      * @Gedmo\TreeRoot
      * @ORM\Column(name="root", type="integer", nullable=true)
      */

@@ -16,7 +16,6 @@ class CategoriesController extends FOSRestController
     private $categoryRepository;
 
     /**
-     * CategoriesController constructor.
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(CategoryRepository $categoryRepository)
