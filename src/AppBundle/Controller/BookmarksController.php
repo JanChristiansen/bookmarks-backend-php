@@ -9,6 +9,7 @@ use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookmarksController extends FOSRestController
 {
@@ -54,6 +55,10 @@ class BookmarksController extends FOSRestController
      */
     public function getBookmarkAction(Bookmark $bookmark)
     {
+        if (!$bookmark->isOwner($this->getUser())) {
+            throw new NotFoundHttpException();
+        }
+
         return $bookmark;
     }
 

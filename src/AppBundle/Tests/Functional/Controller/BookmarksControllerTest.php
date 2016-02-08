@@ -3,6 +3,7 @@
 namespace AppBundle\Tests\Functional\Controller;
 
 use AppBundle\Controller\BookmarksController;
+use AppBundle\DataFixtures\ORM\LoadBookmarksData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeBookmarksData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeUsersData;
@@ -14,7 +15,7 @@ class BookmarksControllerTest extends WebTestCase
     {
         $this->client = static::createClient(array('debug' => false));
 
-        $this->loadFixtures(array(LoadFullTreeCategoriesData::class, LoadFullTreeBookmarksData::class, LoadFullTreeUsersData::class));
+        $this->loadFixtures(array(LoadFullTreeCategoriesData::class, LoadFullTreeBookmarksData::class, LoadFullTreeUsersData::class, LoadBookmarksData::class));
 
         $this->setBasicAuthentication(LoadFullTreeUsersData::USERNAME_TREE, LoadFullTreeUsersData::PASSWORD_TREE);
     }
@@ -59,6 +60,17 @@ class BookmarksControllerTest extends WebTestCase
         $this->assertEquals($expected, $decodedResponse);
     }
 
+    public function testGetBookmarkActionWrongUser()
+    {
+        $expected = '{"error":{"code":404,"message":"Not Found"}}';
+        $response = $this->makeGetRequest('/bookmarks/' . LoadBookmarksData::ID)->client->getResponse();
+        $content = trim($response->getContent());
+
+        $this->assertJsonResponse($response, 404);
+        $this->assertEquals($expected, $content);
+
+    }
+
     public function testDeleteBookmarkAction()
     {
         $response = $this->makeDeleteRequest('/bookmarks/1')->client->getResponse();
@@ -67,4 +79,15 @@ class BookmarksControllerTest extends WebTestCase
         $this->assertEquals(204, $response->getStatusCode());
     }
 
+
+    public function testDeleteBookmarkActionWrongUser()
+    {
+        $expected = '{"error":{"code":404,"message":"Not Found"}}';
+        $response = $this->makeDeleteRequest('/bookmarks/' . LoadBookmarksData::ID)->client->getResponse();
+        $content = trim($response->getContent());
+
+        $this->assertJsonResponse($response, 404);
+        $this->assertEquals($expected, $content);
+
+    }
 }

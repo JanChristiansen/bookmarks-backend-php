@@ -9,10 +9,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
+class LoadBookmarksData extends AbstractFixture implements OrderedFixtureInterface
 {
-    const USERNAME = 'citizenfour';
-    const PASSWORD = 'asyl';
+    const ID = 1000;
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -21,19 +20,18 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $user = new User();
-        $user->setUsername(self::USERNAME);
-        $user->setPassword('$2y$12$TUHtsHqqWZccqjBoZFmfQOMlrYE6Dib1Y1sIxD/q8OvsCi/9Ovozy');
-        $user->setRootCategory($this->getReference(LoadCategoriesData::CATEGORY_ROOT));
-        $this->setReference('user', $user);
-        $manager->persist($user);
-
         $bookmark = new Bookmark();
-        $bookmark->setUser($user);
+        $bookmark->setId(self::ID);
         $bookmark->setName('user-bookmark-1');
-        $bookmark->setId();
-        $manager->persist($bookmark);
+        $bookmark->setUser($this->getReference('user'));
+        $bookmark->setUrl('adsf');
+        $bookmark->setClicks(0);
+        $bookmark->setPosition(0);
 
+        $metadata = $manager->getClassMetaData(get_class($bookmark));
+        $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
+
+        $manager->persist($bookmark);
         $manager->flush();
     }
 
@@ -41,6 +39,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
-        return 200;
+        return 300;
     }
 }
