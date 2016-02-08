@@ -27,7 +27,11 @@ class CategoriesControllerTest extends WebTestCase
     public function testGetCategoriesAction()
     {
         $expectedResponse = '[{"id":2,"name":"category-11","children":[]},{"id":3,"name":"category-12","children":[{"id":4,"name":"category-12-11","children":[{"id":6,"name":"category-12-11-11","children":[]},{"id":7,"name":"category-12-11-12","children":[]}]},{"id":5,"name":"category-12-12","children":[]}]}]';
-        $content = $this->makeGetRequest('/categories')->client->getResponse()->getContent();
+
+        $response = $this->makeGetRequest('/categories')->client->getResponse();
+        $content = $response->getContent();
+
+        $this->assertJsonResponse($response, 200);
 
         $decodedResponse = json_decode($content, false);
         $this->assertInternalType('array', $decodedResponse);
