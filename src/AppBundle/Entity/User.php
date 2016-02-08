@@ -60,6 +60,17 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param int $id
+     * @return User
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Returns the username used to authenticate the user.
      *
      * @return string The username

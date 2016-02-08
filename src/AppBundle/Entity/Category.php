@@ -21,7 +21,7 @@ class Category
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"tree"})
+     * @JMS\Groups({"tree", "category"})
      */
     protected $id;
 
@@ -29,7 +29,7 @@ class Category
      * @var string
      *
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"tree"})
+     * @JMS\Groups({"tree", "category"})
      */
     protected $name;
 
@@ -75,7 +75,7 @@ class Category
      *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
-     * @JMS\Groups({"tree"})
+     * @JMS\Groups({"tree", "category"})
      */
     private $children;
 

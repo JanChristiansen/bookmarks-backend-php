@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Functional\Controller;
 
 use AppBundle\Controller\CategoriesController;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
+use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Tests\Functional\WebTestCase;
 
 class CategoriesControllerTest extends WebTestCase
@@ -12,7 +13,9 @@ class CategoriesControllerTest extends WebTestCase
     {
         $this->client = static::createClient(array('debug' => false));
 
-        $this->loadFixtures(array(LoadCategoriesData::class));
+        $this->loadFixtures(array(LoadUsersData::class, LoadCategoriesData::class));
+
+        $this->setBasicAuthentication(LoadUsersData::USERNAME, LoadUsersData::PASSWORD);
     }
 
     public function testServiceDefinition()
@@ -23,14 +26,15 @@ class CategoriesControllerTest extends WebTestCase
 
     public function testGetCategoriesAction()
     {
-        $expectedResponse = '[{"id":1,"name":"root","lft":1,"lvl":0,"rgt":10,"root":1,"__children":[{"id":2,"name":"category-11","lft":2,"lvl":1,"rgt":3,"root":1,"__children":[]},{"id":3,"name":"category-12","lft":4,"lvl":1,"rgt":9,"root":1,"__children":[{"id":4,"name":"category-12-11","lft":5,"lvl":2,"rgt":6,"root":1,"__children":[]},{"id":5,"name":"category-12-12","lft":7,"lvl":2,"rgt":8,"root":1,"__children":[]}]}]}]';
+        $expectedResponse = '[{"id":2,"name":"category-11","children":[]},{"id":3,"name":"category-12","children":[{"id":4,"name":"category-12-11","children":[{"id":6,"name":"category-12-11-11","children":[]},{"id":7,"name":"category-12-11-12","children":[]}]},{"id":5,"name":"category-12-12","children":[]}]}]';
         $content = $this->makeGetRequest('/categories')->client->getResponse()->getContent();
 
         $decodedResponse = json_decode($content, false);
         $this->assertInternalType('array', $decodedResponse);
-        $this->assertInternalType('array', $decodedResponse[0]->__children);
-        $this->assertCount(1, $decodedResponse);
-        $this->assertCount(2, $decodedResponse[0]->__children);
+        $this->assertInternalType('array', $decodedResponse[0]->children);
+        $this->assertCount(2, $decodedResponse);
+        $this->assertCount(0, $decodedResponse[0]->children);
+        $this->assertCount(2, $decodedResponse[1]->children);
         $this->assertEquals($expectedResponse, $content);
     }
 }

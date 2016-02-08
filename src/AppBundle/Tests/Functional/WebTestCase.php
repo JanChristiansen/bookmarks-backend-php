@@ -19,6 +19,11 @@ class WebTestCase extends LiipWebTestCase
     protected $crawler;
 
     /**
+     * @var array
+     */
+    protected $server = array();
+
+    /**
      * @param string $url
      * @param array $queryParameters
      * @param array $files
@@ -76,7 +81,33 @@ class WebTestCase extends LiipWebTestCase
      */
     protected function makeRequest($requestType, $url, $queryParameters, $files = array(), $server = array())
     {
+        $server = array_merge($this->server, $server);
+
         $this->crawler = $this->client->request($requestType, $url, $queryParameters, $files, $server);
+
+        return $this;
+    }
+
+    /**
+     * @param string $userName
+     * @param string $password
+     * @return WebTestCase
+     */
+    protected function setBasicAuthentication($userName, $password)
+    {
+        $this->server['PHP_AUTH_USER'] = $userName;
+        $this->server['PHP_AUTH_PW'] = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return WebTestCase
+     */
+    protected function clearBasicAuthentication()
+    {
+        $this->server['PHP_AUTH_USER'] = null;
+        $this->server['PHP_AUTH_PW'] = null;
 
         return $this;
     }

@@ -50,6 +50,6 @@ class CategoryRepositoryTest extends WebTestCase
         $this->assertEquals($expectedRoot->getName(), $actualRoot->getName());
         $this->assertCount(2, $actualRoot->getChildren());
 
-        $this->assertCount(2, $actualChildren[1]->getChildren());
+        $this->assertCount(0, $actualChildren[0]->getChildren());
     }
 }

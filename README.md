@@ -1,4 +1,6 @@
-user handling erstmal nur in memory in yml
+userhandling in controller
+
+test stabiler machen
 
 routing.xml ins bundle
 

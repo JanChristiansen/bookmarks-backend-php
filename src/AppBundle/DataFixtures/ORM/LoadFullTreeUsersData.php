@@ -8,10 +8,10 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
+class LoadFullTreeUsersData extends AbstractFixture implements OrderedFixtureInterface
 {
-    const USERNAME = 'citizenfour';
-    const PASSWORD = 'asyl';
+    const USERNAME_TREE = '3dw4rd';
+    const PASSWORD_TREE = 'asyl';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -21,9 +21,9 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setUsername(self::USERNAME);
+        $user->setUsername(self::USERNAME_TREE);
         $user->setPassword('$2y$12$TUHtsHqqWZccqjBoZFmfQOMlrYE6Dib1Y1sIxD/q8OvsCi/9Ovozy');
-        $user->setRootCategory($this->getReference(LoadCategoriesData::CATEGORY_ROOT));
+        $user->setRootCategory($this->getReference(LoadFullTreeCategoriesData::TREE_CATEGORY_ROOT));
         $this->setReference('user', $user);
         $manager->persist($user);
 
@@ -34,6 +34,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
-        return 200;
+        return 201;
     }
 }
