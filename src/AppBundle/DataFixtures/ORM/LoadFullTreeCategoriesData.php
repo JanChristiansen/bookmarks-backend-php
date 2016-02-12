@@ -33,7 +33,7 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
             $children1[$i]->setName($name);
             $children1[$i]->setParent($root);
             $manager->persist($children1[$i]);
-            $this->addReference($name, $children1[$i]);
+            $this->addReference('full-tree-' . $name, $children1[$i]);
         }
 
         /** @var Category[] $children12 */
@@ -44,7 +44,7 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
             $children12[$i]->setName($name);
             $children12[$i]->setParent($children1[2]);
             $manager->persist($children12[$i]);
-            $this->addReference($name, $children12[$i]);
+            $this->addReference('full-tree-' . $name, $children12[$i]);
         }
 
         /** @var Category[] $children13 */
@@ -55,7 +55,7 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
             $children13[$i]->setName($name);
             $children13[$i]->setParent($children1[3]);
             $manager->persist($children13[$i]);
-            $this->addReference($name, $children13[$i]);
+            $this->addReference('full-tree-' . $name, $children13[$i]);
         }
 
         /** @var Category[] $children131 */
@@ -66,7 +66,7 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
             $children131[$i]->setName($name);
             $children131[$i]->setParent($children13[1]);
             $manager->persist($children131[$i]);
-            $this->addReference($name, $children131[$i]);
+            $this->addReference('full-tree-' . $name, $children131[$i]);
         }
 
         $manager->flush();

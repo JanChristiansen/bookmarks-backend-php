@@ -13,6 +13,9 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 {
     const USERNAME = 'citizenfour';
     const PASSWORD = 'asyl';
+    const REFERENCE = 'user-1';
+
+    const REFERENCE_2 = 'user-2';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -25,14 +28,14 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user->setUsername(self::USERNAME);
         $user->setPassword('$2y$12$TUHtsHqqWZccqjBoZFmfQOMlrYE6Dib1Y1sIxD/q8OvsCi/9Ovozy');
         $user->setRootCategory($this->getReference(LoadCategoriesData::CATEGORY_ROOT));
-        $this->setReference('user', $user);
+        $this->setReference(self::REFERENCE, $user);
         $manager->persist($user);
 
-        $bookmark = new Bookmark();
-        $bookmark->setUser($user);
-        $bookmark->setName('user-bookmark-1');
-        $bookmark->setId();
-        $manager->persist($bookmark);
+        $user2 = new User();
+        $user2->setUsername('another-user');
+        $user2->setPassword('total egal');
+        $this->setReference(self::REFERENCE_2, $user2);
+        $manager->persist($user2);
 
         $manager->flush();
     }

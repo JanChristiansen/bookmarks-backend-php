@@ -5,6 +5,7 @@ namespace AppBundle\Tests\Functional;
 use Liip\FunctionalTestBundle\Test\WebTestCase as LiipWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\Response;
 
 class WebTestCase extends LiipWebTestCase
 {
@@ -120,5 +121,29 @@ class WebTestCase extends LiipWebTestCase
     {
         $this->assertEquals($statusCode, $response->getStatusCode(), $response->getContent());
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'), $response->headers);
+    }
+
+    /**
+     * @param Response $response
+     */
+    protected function assertNotFound(Response $response)
+    {
+        $content = trim($response->getContent());
+        $expected = '{"error":{"code":404,"message":"Not Found"}}';
+
+        $this->assertJsonResponse($response, 404);
+        $this->assertEquals($expected, $content);
+    }
+
+    /**
+     * @param Response $response
+     */
+    protected function assertForbidden(Response $response)
+    {
+        $content = trim($response->getContent());
+        $expected = '{"error":{"code":403,"message":"Forbidden"}}';
+
+        $this->assertJsonResponse($response, 403);
+        $this->assertEquals($expected, $content);
     }
 }

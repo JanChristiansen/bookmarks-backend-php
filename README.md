@@ -1,3 +1,7 @@
+category controller fertig machen
+
+bookmark controller fertig machen
+
 userhandling in controller
 
 test stabiler machen

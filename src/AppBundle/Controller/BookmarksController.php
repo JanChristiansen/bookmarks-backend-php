@@ -9,6 +9,7 @@ use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookmarksController extends FOSRestController
@@ -51,13 +52,12 @@ class BookmarksController extends FOSRestController
      * @Nelmio\ApiDoc()
      * @Rest\View(serializerGroups={"bookmark"})
      *
+     * @param Bookmark $bookmark
      * @return Bookmark
      */
     public function getBookmarkAction(Bookmark $bookmark)
     {
-        if (!$bookmark->isOwner($this->getUser())) {
-            throw new NotFoundHttpException();
-        }
+        $this->checkBookmarkOwner($bookmark);
 
         return $bookmark;
     }
@@ -68,6 +68,7 @@ class BookmarksController extends FOSRestController
      */
     public function deleteBookmarkAction(Bookmark $bookmark)
     {
+        $this->checkBookmarkOwner($bookmark);
         $this->bookmarkRepository->delete($bookmark);
     }
 
@@ -77,7 +78,7 @@ class BookmarksController extends FOSRestController
      *
      * @return Bookmark
      */
-    public function putBookmarkAction(Bookmark $bookmark)
+    public function putBookmarkAction(Request $request)
     {
 
     }
@@ -91,5 +92,15 @@ class BookmarksController extends FOSRestController
     public function patchBookmarkAction(Bookmark $bookmark)
     {
 
+    }
+
+    /**
+     * @param Bookmark $bookmark
+     */
+    private function checkBookmarkOwner(Bookmark $bookmark)
+    {
+        if (!$bookmark->isOwner($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
     }
 }

@@ -24,7 +24,7 @@ class LoadFullTreeBookmarksData extends AbstractFixture implements OrderedFixtur
             $bookmark->setUrl('http://category-11.com/free-snowden/' . $i);
             $bookmark->setPosition($i);
             $bookmark->setClicks(124);
-            $bookmark->setCategory($this->getReference('category-11'));
+            $bookmark->setCategory($this->getReference('full-tree-category-11'));
             $manager->persist($bookmark);
         }
 
@@ -34,7 +34,7 @@ class LoadFullTreeBookmarksData extends AbstractFixture implements OrderedFixtur
             $bookmark->setUrl('http://category-13-11-11.com/free-snowden/' . $i);
             $bookmark->setPosition($i);
             $bookmark->setClicks(rand(5, 17));
-            $bookmark->setCategory($this->getReference('category-13-11-11'));
+            $bookmark->setCategory($this->getReference('full-tree-category-13-11-11'));
             $manager->persist($bookmark);
         }
 
@@ -44,7 +44,7 @@ class LoadFullTreeBookmarksData extends AbstractFixture implements OrderedFixtur
         $bookmark->setUrl('http://category-11.com/free-snowden/' . $i);
         $bookmark->setPosition($i);
         $bookmark->setClicks(rand(0, 213));
-        $bookmark->setCategory($this->getReference('category-11'));
+        $bookmark->setCategory($this->getReference('full-tree-category-11'));
         $manager->persist($bookmark);
 
         $manager->flush();
