@@ -119,7 +119,7 @@ class WebTestCase extends LiipWebTestCase
      */
     protected function assertJsonResponse($response, $statusCode = 200)
     {
-        $this->assertEquals($statusCode, $response->getStatusCode(), $response->getContent());
+        $this->assertStatusCodeInResponse($response, $statusCode);
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'), $response->headers);
     }
 
@@ -145,5 +145,14 @@ class WebTestCase extends LiipWebTestCase
 
         $this->assertJsonResponse($response, 403);
         $this->assertEquals($expected, $content);
+    }
+
+    /**
+     * @param Response $response
+     * @param int $statusCode
+     */
+    protected function assertStatusCodeInResponse(Response $response, $statusCode)
+    {
+        $this->assertEquals($statusCode, $response->getStatusCode(), $response->getContent());
     }
 }

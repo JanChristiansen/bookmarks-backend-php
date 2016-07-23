@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Interfaces\Repository;
 
 use AppBundle\Entity\Category;
@@ -16,4 +17,9 @@ interface CategoryRepository
      * @return \AppBundle\Entity\Category[]
      */
     public function findAllAsTree($orderBy);
+
+    /**
+     * @param Category $category
+     */
+    public function delete($category);
 }

@@ -227,11 +227,11 @@ class Bookmark
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      *
      * @return Bookmark
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -241,7 +241,7 @@ class Bookmark
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -254,6 +254,6 @@ class Bookmark
      */
     public function isOwner(User $user)
     {
-        return ($this->getUser() && $this->getUser()->getId() == $user->getId());
+        return ($this->getUser() instanceof User && $user->isSame($this->getUser()));
     }
 }

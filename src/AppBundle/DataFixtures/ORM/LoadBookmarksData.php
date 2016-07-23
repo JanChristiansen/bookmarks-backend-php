@@ -3,12 +3,9 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Bookmark;
-use AppBundle\Entity\Category;
-use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 
 
 class LoadBookmarksData extends AbstractFixture implements OrderedFixtureInterface
@@ -16,6 +13,8 @@ class LoadBookmarksData extends AbstractFixture implements OrderedFixtureInterfa
     const ID = 1000;
     const REFERENCE = 'user-bookmark-1';
     const REFERENCE_2 = 'user-2-bookmark-2';
+
+    const ORDER = LoadCategoriesData::ORDER + 1;
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -51,6 +50,6 @@ class LoadBookmarksData extends AbstractFixture implements OrderedFixtureInterfa
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
-        return 300;
+        return self::ORDER;
     }
 }

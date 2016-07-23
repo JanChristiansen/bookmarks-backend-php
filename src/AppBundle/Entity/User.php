@@ -170,6 +170,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param User $user
+     * @return bool
+     */
+    public function isSame(User $user) {
+        return $this->getId() == $user->getId();
+    }
+
+    /**
      * Returns the roles granted to the user.
      *
      * <code>

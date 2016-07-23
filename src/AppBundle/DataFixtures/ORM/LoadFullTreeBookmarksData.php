@@ -3,7 +3,6 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Bookmark;
-use AppBundle\Entity\Category;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -33,7 +32,7 @@ class LoadFullTreeBookmarksData extends AbstractFixture implements OrderedFixtur
             $bookmark->setName('bookmark-' . $i);
             $bookmark->setUrl('http://category-13-11-11.com/free-snowden/' . $i);
             $bookmark->setPosition($i);
-            $bookmark->setClicks(rand(5, 17));
+            $bookmark->setClicks(3);
             $bookmark->setCategory($this->getReference('full-tree-category-13-11-11'));
             $manager->persist($bookmark);
         }
@@ -43,7 +42,7 @@ class LoadFullTreeBookmarksData extends AbstractFixture implements OrderedFixtur
         $bookmark->setName('unique');
         $bookmark->setUrl('http://category-11.com/free-snowden/' . $i);
         $bookmark->setPosition($i);
-        $bookmark->setClicks(rand(0, 213));
+        $bookmark->setClicks(43);
         $bookmark->setCategory($this->getReference('full-tree-category-11'));
         $manager->persist($bookmark);
 

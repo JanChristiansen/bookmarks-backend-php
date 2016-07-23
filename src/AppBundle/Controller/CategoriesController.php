@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\User;
 use AppBundle\Interfaces\Repository\CategoryRepository;
 use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -17,6 +16,7 @@ class CategoriesController extends FOSRestController
      * @var CategoryRepository
      */
     private $categoryRepository;
+
     /**
      * @var BookmarkService
      */
@@ -41,11 +41,6 @@ class CategoriesController extends FOSRestController
     public function getCategoriesAction()
     {
         return $this->bookmarkService->getTree($this->getUser());
-
-        /** @var User $user */
-        $user = $this->getUser();
-
-        return $this->categoryRepository->childrenHierarchy();
     }
 
     /**
@@ -55,7 +50,7 @@ class CategoriesController extends FOSRestController
      * @param Category $category
      * @return Category
      */
-    public function getAction(Category $category)
+    public function getCategoryAction(Category $category)
     {
         $this->checkCategoryOwner($category);
 
@@ -66,7 +61,7 @@ class CategoriesController extends FOSRestController
      * @Nelmio\ApiDoc()
      * @Rest\View(statusCode=204)
      */
-    public function deleteAction(Category $category)
+    public function deleteCategoryAction(Category $category)
     {
         $this->checkCategoryOwner($category);
         $this->categoryRepository->delete($category);
@@ -79,7 +74,7 @@ class CategoriesController extends FOSRestController
      * @param Request $request
      * @return Category
      */
-    public function putAction(Request $request)
+    public function putCategoriesAction(Request $request)
     {
 
     }
@@ -91,12 +86,18 @@ class CategoriesController extends FOSRestController
      * @param Category $category
      * @return Category
      */
-    public function patchAction(Category $category)
+    public function patchCategoryAction(Category $category)
     {
 
     }
 
+    /**
+     * @param Category $category
+     */
     private function checkCategoryOwner(Category $category)
     {
+        if (!$category->isOwner($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
     }
 }

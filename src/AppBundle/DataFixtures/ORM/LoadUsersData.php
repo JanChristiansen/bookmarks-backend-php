@@ -2,8 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Bookmark;
-use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -17,6 +15,8 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 
     const REFERENCE_2 = 'user-2';
 
+    const ORDER = 1;
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -27,7 +27,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $user = new User();
         $user->setUsername(self::USERNAME);
         $user->setPassword('$2y$12$TUHtsHqqWZccqjBoZFmfQOMlrYE6Dib1Y1sIxD/q8OvsCi/9Ovozy');
-        $user->setRootCategory($this->getReference(LoadCategoriesData::CATEGORY_ROOT));
         $this->setReference(self::REFERENCE, $user);
         $manager->persist($user);
 
@@ -44,6 +43,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
-        return 200;
+        return self::ORDER;
     }
 }

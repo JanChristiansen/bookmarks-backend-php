@@ -34,6 +34,14 @@ class Category
     protected $name;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
      * @var int
      * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer")
@@ -270,5 +278,30 @@ class Category
     public function setChildren(array $children)
     {
         $this->children = $children;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isOwner(User $user)
+    {
+        return ($this->getUser() instanceof User && $user->isSame($this->getUser()));
     }
 }
