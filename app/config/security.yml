@@ -19,11 +19,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api_doc:
+            pattern: ^/api/doc
+            security: false
+
         main:
             anonymous: ~
             http_basic:
                 provider: database
-                realm: 'Secured Demo Area'
+                realm: 'Bookmarks'
             stateless:  true
 
     access_control:
