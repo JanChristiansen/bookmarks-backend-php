@@ -6,6 +6,7 @@ use AppBundle\Controller\CategoriesController;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use AppBundle\Tests\Functional\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,15 +87,13 @@ class CategoriesControllerTest extends WebTestCase
         $this->assertNotFound($response);
     }
 
-
     public function testDeleteCategoryAction()
     {
         /** @var Category $category */
         $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
         $response = $this->makeDeleteRequest('/categories/' . $category->getId())->client->getResponse();
 
-        $this->assertEmpty($response->getContent());
-        $this->assertStatusCodeInResponse($response, Response::HTTP_NO_CONTENT);
+        $this->assertNoContent($response);
     }
 
     public function testDeleteCategoryActionForbidden()
@@ -109,5 +108,126 @@ class CategoriesControllerTest extends WebTestCase
     {
         $response = $this->makeDeleteRequest('/categories/999999999')->client->getResponse();
         $this->assertNotFound($response);
+    }
+
+    public function testPatchCategoryAction()
+    {
+        $requestParams = ['name' => 'new name'];
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $response = $this->makePatchRequest(
+            '/categories/' . $category->getId(),
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $this->assertNoContent($response);
+
+        $patchedCategory = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $this->assertEquals('new name', $patchedCategory->getName());
+    }
+
+    public function testPatchCategoryActionFormNotValid()
+    {
+        $requestParams = ['name' => ''];
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $response = $this->makePatchRequest(
+            '/categories/' . $category->getId(),
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]}}}}';
+        $this->assertEquals($expectedResponse, $response->getContent());
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+
+        $patchedCategory = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $this->assertEquals('category-11', $patchedCategory->getName());
+    }
+
+    public function testPatchCategoryActionFormNotSubmitted()
+    {
+        $requestParams = [];
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $response = $this->makePatchRequest(
+            '/categories/' . $category->getId(),
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
+        $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+
+        $patchedCategory = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $this->assertEquals('category-11', $patchedCategory->getName());
+    }
+
+    public function testPatchCategoryActionForbidden()
+    {
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE_2);
+        $response = $this->makePatchRequest('/categories/' . $category->getId())->client->getResponse();
+        $this->assertForbidden($response);
+    }
+
+    public function testPatchCategoryActionNotFound()
+    {
+        $response = $this->makePatchRequest('/categories/999999999')->client->getResponse();
+        $this->assertNotFound($response);
+    }
+
+    public function testPostCategoryAction()
+    {
+        $requestParams = ['name' => 'new name'];
+        /** @var Category $category */
+        $response = $this->makePostRequest(
+            '/categories',
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $decodedResponse = json_decode($response->getContent(), false);
+
+        $this->assertInstanceOf('stdClass', $decodedResponse);
+        $this->assertInternalType('array', $decodedResponse->children);
+        $this->assertCount(0, $decodedResponse->children);
+        $this->assertEquals('new name', $decodedResponse->name);
+        $this->assertGreaterThan(0, $decodedResponse->id);
+        $this->assertStatusCodeInResponse($response, Response::HTTP_OK);
+    }
+
+    public function testPostCategoryActionFormNotValid()
+    {
+        $response = $this->makePostRequest(
+            '/categories',
+            ['name' => ''],
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]}}}}';
+        $this->assertEquals($expectedResponse, $response->getContent());
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testPostCategoryActionFormNotSubmitted()
+    {
+        $response = $this->makePostRequest(
+            '/categories',
+            [],
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
+        $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
     }
 }

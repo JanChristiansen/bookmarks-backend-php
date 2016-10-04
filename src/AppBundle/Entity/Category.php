@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Gedmo\Tree(type="nested")
@@ -30,6 +31,8 @@ class Category
      *
      * @ORM\Column(type="string", length=255)
      * @JMS\Groups({"tree", "category"})
+     * @Assert\Length(max="255")
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -102,6 +105,7 @@ class Category
     public function __construct()
     {
         $this->bookmarks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

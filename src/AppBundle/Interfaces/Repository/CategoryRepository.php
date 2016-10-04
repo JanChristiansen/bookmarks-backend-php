@@ -22,4 +22,9 @@ interface CategoryRepository
      * @param Category $category
      */
     public function delete($category);
+
+    /**
+     * @param Category $category
+     */
+    public function save($category);
 }

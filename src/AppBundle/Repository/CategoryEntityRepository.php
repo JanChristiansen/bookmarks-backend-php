@@ -47,4 +47,13 @@ class CategoryEntityRepository extends NestedTreeRepository implements CategoryR
             throw $e;
         }
     }
+
+    /**
+     * @param Category $category
+     */
+    public function save($category)
+    {
+        $this->_em->persist($category);
+        $this->_em->flush($category);
+    }
 }

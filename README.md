@@ -2,6 +2,8 @@ category controller fertig machen
 
 bookmark controller fertig machen
 
+production setup script mit einem user und einer root category
+
 testGetBookmarksAction besser machen
 
 userhandling in controller

@@ -5,8 +5,10 @@ namespace AppBundle\Tests\Functional\Repository;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeBookmarksData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeCategoriesData;
+use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
 use AppBundle\Repository\CategoryEntityRepository;
+use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class CategoryRepositoryTest extends WebTestCase
@@ -16,9 +18,17 @@ class CategoryRepositoryTest extends WebTestCase
      */
     protected $repository;
 
+    /**
+     * @var ReferenceRepository
+     */
+    protected $fixtureRepository;
+
     public function setUp()
     {
-        $this->loadFixtures(array(LoadCategoriesData::class));
+        $this->fixtureRepository = $this
+            ->loadFixtures(array(LoadUsersData::class, LoadCategoriesData::class))
+            ->getReferenceRepository();
+
         $this->repository = $this->getContainer()->get('doctrine')->getRepository(Category::class);
     }
 
@@ -51,5 +61,20 @@ class CategoryRepositoryTest extends WebTestCase
         $this->assertCount(2, $actualRoot->getChildren());
 
         $this->assertCount(0, $actualChildren[0]->getChildren());
+    }
+
+    public function testSave()
+    {
+        $category = $this->repository->get(LoadCategoriesData::ROOT_ID);
+
+        $user = $this->fixtureRepository->getReference(LoadUsersData::REFERENCE_2);
+        $category->setName('other Name');
+        $category->setUser($user);
+        $this->repository->save($category);
+
+        $saved = $this->repository->get(LoadCategoriesData::ROOT_ID);
+        $this->assertEquals($saved->getId(), $saved->getId());
+        $this->assertEquals($saved->getName(), $saved->getName());
+        $this->assertEquals($saved->getUser()->getId(), $saved->getUser()->getId());
     }
 }
