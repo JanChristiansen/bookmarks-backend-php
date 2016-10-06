@@ -43,7 +43,7 @@ class Bookmark
      * @ORM\Column(type="integer")
      * @JMS\Groups({"tree", "bookmark"})
      */
-    protected $clicks;
+    protected $clicks = 0;
 
     /**
      * @var Category
@@ -59,7 +59,7 @@ class Bookmark
      * @ORM\Column(type="integer")
      * @JMS\Groups({"tree", "bookmark"})
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * @var User

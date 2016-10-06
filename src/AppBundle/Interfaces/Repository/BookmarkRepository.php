@@ -10,4 +10,9 @@ interface BookmarkRepository
      * @param Bookmark $bookmark
      */
     public function delete(Bookmark $bookmark);
+
+    /**
+     * @param Bookmark $bookmark
+     */
+    public function save(Bookmark $bookmark);
 }

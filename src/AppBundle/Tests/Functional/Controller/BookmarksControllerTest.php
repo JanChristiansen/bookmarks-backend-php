@@ -12,6 +12,7 @@ use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Bookmark;
 use AppBundle\Tests\Functional\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class BookmarksControllerTest extends WebTestCase
 {
@@ -25,7 +26,16 @@ class BookmarksControllerTest extends WebTestCase
         $this->client = static::createClient(array('debug' => false));
 
         $this->fixtures = $this
-            ->loadFixtures(array(LoadFullTreeCategoriesData::class, LoadFullTreeBookmarksData::class, LoadFullTreeUsersData::class, LoadCategoriesData::class, LoadUsersData::class, LoadBookmarksData::class))
+            ->loadFixtures(
+                array(
+                    LoadFullTreeCategoriesData::class,
+                    LoadFullTreeBookmarksData::class,
+                    LoadFullTreeUsersData::class,
+                    LoadCategoriesData::class,
+                    LoadUsersData::class,
+                    LoadBookmarksData::class,
+                )
+            )
             ->getReferenceRepository();
 
         $this->setBasicAuthentication(LoadUsersData::USERNAME, LoadUsersData::PASSWORD);
@@ -111,6 +121,75 @@ class BookmarksControllerTest extends WebTestCase
         /** @var Bookmark $bookmark */
         $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE_2);
         $response = $this->makeDeleteRequest('/bookmarks/' . $bookmark->getId())->client->getResponse();
+        $this->assertForbidden($response);
+    }
+
+
+    public function testPatchBookmarkAction()
+    {
+        $requestParams = ['name' => 'new name'];
+
+        /** @var Bookmark $bookmark */
+        $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $response = $this->makePatchRequest(
+            '/bookmarks/' . $bookmark->getId(),
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $this->assertNoContent($response);
+
+        $patchedBookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $this->assertEquals('new name', $patchedBookmark->getName());
+    }
+
+    public function testPatchCategoryActionFormNotValid()
+    {
+        $requestParams = ['name' => 'new name', 'category' => -1];
+
+        /** @var Bookmark $bookmark */
+        $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $response = $this->makePatchRequest(
+            '/bookmarks/' . $bookmark->getId(),
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{},"url":{},"category":{"errors":["This value is not valid."]}}}}';
+        $this->assertEquals($expectedResponse, $response->getContent());
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+
+        $patchedCategory = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $this->assertEquals(LoadBookmarksData::REFERENCE, $patchedCategory->getName());
+    }
+
+    public function testPatchBookmarkActionNotSubmitted()
+    {
+        /** @var Bookmark $bookmark */
+        $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $response = $this->makePatchRequest('/bookmarks/' . $bookmark->getId())->client->getResponse();
+
+        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
+        $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+
+        $patchedBookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $this->assertEquals(LoadBookmarksData::REFERENCE, $patchedBookmark->getName());
+    }
+
+    public function testPatchBookmarkActionNotFound()
+    {
+        $response = $this->makePatchRequest('/bookmarks/99999999999')->client->getResponse();
+        $this->assertNotFound($response);
+    }
+
+    public function testPatchBookmarkActionForbidden()
+    {
+        /** @var Bookmark $bookmark */
+        $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE_2);
+        $response = $this->makePatchRequest('/bookmarks/' . $bookmark->getId())->client->getResponse();
         $this->assertForbidden($response);
     }
 }

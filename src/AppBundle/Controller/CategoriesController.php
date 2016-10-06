@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Form\CategoryFormType;
+use AppBundle\Form\Type\CategoryFormType;
 use AppBundle\Interfaces\Repository\CategoryRepository;
 use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -98,6 +98,7 @@ class CategoriesController extends AbstractController
      * @Rest\View(statusCode=204, serializerGroups={"category"})
      *
      * @param Category $category
+     * @param Request $request
      * @return View|void
      */
     public function patchCategoryAction(Category $category, Request $request)

@@ -152,7 +152,7 @@ class WebTestCase extends LiipWebTestCase
      */
     protected function assertNoContent(Response $response)
     {
-        $this->assertEmpty($response->getContent());
+        $this->assertEmpty($response->getContent(), $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_NO_CONTENT);
     }
 
