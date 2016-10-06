@@ -2,16 +2,12 @@
 
 namespace AppBundle\Tests\Unit\Form\Type;
 
-use AppBundle\Tests\DoctrineQueryStub;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\SchemaTool;
 use Gedmo\Tree\TreeListener;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
-use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class AbstractFormTypeTest extends TypeTestCase
@@ -74,32 +70,6 @@ class AbstractFormTypeTest extends TypeTestCase
 
         return $registry;
     }
-
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param $queryResult
-     */
-    protected function createQuery(QueryBuilder $queryBuilder, $queryResult)
-    {
-        $queryMock = $this->getMockBuilder(DoctrineQueryStub::class)
-            ->setMethods(array('execute'))
-            ->disableOriginalConstructor()
-            ->getMock();
-        $queryMock->expects($this->any())->method('setParameters')->willReturn($queryMock);
-        $queryMock->expects($this->any())->method('setFirstResult')->willReturn($queryMock);
-        $queryMock->expects($this->any())->method('setMaxResults')->willReturn($queryMock);
-        $queryMock->expects($this->any())->method('execute')->willReturn($queryResult);
-
-        $this->entityManager->expects($this->any())
-            ->method('createQuery')
-            ->with($queryBuilder->getDQL())
-            ->will($this->returnValue($queryMock));
-
-        $queryBuilder->expects($this->any())
-            ->method('getQuery')
-            ->will($this->returnValue($queryMock));
-    }
-
 
     /**
      * Create the schema that will be used for testing
