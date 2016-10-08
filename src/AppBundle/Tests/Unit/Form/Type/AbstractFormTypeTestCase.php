@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
 use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class AbstractFormTypeTest extends TypeTestCase
+class AbstractFormTypeTestCase extends TypeTestCase
 {
     /**
      * @var EntityManager

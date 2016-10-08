@@ -185,7 +185,6 @@ class CategoriesControllerTest extends WebTestCase
     public function testPostCategoryAction()
     {
         $requestParams = ['name' => 'new name'];
-        /** @var Category $category */
         $response = $this->makePostRequest(
             '/categories',
             $requestParams,

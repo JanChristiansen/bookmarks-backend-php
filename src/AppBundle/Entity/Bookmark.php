@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BookmarkEntityRepository")
@@ -26,6 +27,8 @@ class Bookmark
      *
      * @ORM\Column(type="string", length=255)
      * @JMS\Groups({"tree", "bookmark"})
+     * @Assert\Length(max="255")
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -34,6 +37,8 @@ class Bookmark
      *
      * @ORM\Column(type="string", length=10000)
      * @JMS\Groups({"tree", "bookmark"})
+     * @Assert\Length(max="10000")
+     * @Assert\NotBlank()
      */
     protected $url;
 

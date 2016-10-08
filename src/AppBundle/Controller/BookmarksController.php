@@ -7,13 +7,12 @@ use AppBundle\Entity\User;
 use AppBundle\Form\Type\BookmarkFormType;
 use AppBundle\Interfaces\Repository\BookmarkRepository;
 use AppBundle\Services\BookmarkService;
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class BookmarksController extends AbstractController
 {
@@ -79,11 +78,23 @@ class BookmarksController extends AbstractController
      * @Nelmio\ApiDoc()
      * @Rest\View(serializerGroups={"bookmark"})
      *
-     * @return Bookmark
+     * @param Request $request
+     * @return Bookmark|View
      */
     public function postBookmarkAction(Request $request)
     {
+        $bookmark = new Bookmark();
+        $form = $this->createForm(BookmarkFormType::class, $bookmark);
+        if (!$this->handleForm($form, $request)) {
+            return View::create($form, Response::HTTP_BAD_REQUEST);
+        }
 
+        $this->checkCategoryAndBookmarkOwner($bookmark);
+
+        $bookmark->setUser($this->getUser());
+        $this->bookmarkRepository->save($bookmark);
+
+        return $bookmark;
     }
 
     /**
@@ -99,13 +110,14 @@ class BookmarksController extends AbstractController
         $this->checkBookmarkOwner($bookmark);
 
         $form = $this->createForm(BookmarkFormType::class, $bookmark, ['method' => Request::METHOD_PATCH]);
-        if ($this->handleForm($form, $request)) {
-            $this->bookmarkRepository->save($bookmark);
-
-            return $this->view(null, Response::HTTP_NO_CONTENT);
+        if (!$this->handleForm($form, $request)) {
+            return View::create($form, Response::HTTP_BAD_REQUEST);
         }
 
-        return View::create($form, Response::HTTP_BAD_REQUEST);
+        $this->checkCategoryAndBookmarkOwner($bookmark);
+        $this->bookmarkRepository->save($bookmark);
+
+        return $this->view(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -115,6 +127,16 @@ class BookmarksController extends AbstractController
     {
         if (!$bookmark->isOwner($this->getUser())) {
             throw $this->createAccessDeniedException();
+        }
+    }
+
+    /**
+     * @param $bookmark
+     */
+    private function checkCategoryAndBookmarkOwner($bookmark)
+    {
+        if (!$bookmark->getCategory()->isOwner($this->getUser())) {
+            throw new BadRequestHttpException('User mismatch');
         }
     }
 }

@@ -49,7 +49,10 @@ class BookmarkEntityRepositoryTest extends WebTestCase
 
     public function testDelete()
     {
-        $bookmark = $this->repository->findOneBy(array('name' => 'unique'));
+        /** @var Bookmark $bookmark */
+        $bookmark = $this->fixtureRepository->getReference(LoadBookmarksData::REFERENCE);
+
+        $bookmark = $this->repository->get($bookmark->getId());
         $this->repository->delete($bookmark);
 
         $actualResult = $this->repository->findOneBy(array('name' => 'unique'));

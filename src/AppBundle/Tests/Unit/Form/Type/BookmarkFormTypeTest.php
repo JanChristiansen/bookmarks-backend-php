@@ -6,7 +6,7 @@ use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
 use AppBundle\Form\Type\BookmarkFormType;
 
-class BookmarkFormTypeTest extends AbstractFormTypeTest
+class BookmarkFormTypeTest extends AbstractFormTypeTestCase
 {
     public function testSubmitValidData()
     {

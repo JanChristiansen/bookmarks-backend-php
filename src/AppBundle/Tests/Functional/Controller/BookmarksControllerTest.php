@@ -10,6 +10,7 @@ use AppBundle\DataFixtures\ORM\LoadFullTreeCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeUsersData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Bookmark;
+use AppBundle\Entity\Category;
 use AppBundle\Tests\Functional\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -124,10 +125,12 @@ class BookmarksControllerTest extends WebTestCase
         $this->assertForbidden($response);
     }
 
-
     public function testPatchBookmarkAction()
     {
-        $requestParams = ['name' => 'new name'];
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+
+        $requestParams = ['name' => 'new name', 'category' => $category->getId(), 'url' => 'gopher://old'];
 
         /** @var Bookmark $bookmark */
         $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
@@ -140,8 +143,11 @@ class BookmarksControllerTest extends WebTestCase
 
         $this->assertNoContent($response);
 
+        /** @var Bookmark $patchedBookmark */
         $patchedBookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
         $this->assertEquals('new name', $patchedBookmark->getName());
+        $this->assertEquals($category->getId(), $patchedBookmark->getCategory()->getId());
+        $this->assertEquals('gopher://old', $patchedBookmark->getUrl());
     }
 
     public function testPatchCategoryActionFormNotValid()
@@ -163,6 +169,30 @@ class BookmarksControllerTest extends WebTestCase
 
         $patchedCategory = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
         $this->assertEquals(LoadBookmarksData::REFERENCE, $patchedCategory->getName());
+    }
+
+    public function testPatchBookmarkActionCategoryOwnerNotBookmarkOwner()
+    {
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE_2);
+
+        $requestParams = ['name' => 'new name', 'category' => $category->getId()];
+
+        /** @var Bookmark $bookmark */
+        $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $response = $this->makePatchRequest(
+            '/bookmarks/' . $bookmark->getId(),
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
+        $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+
+        $patchedBookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
+        $this->assertEquals(LoadBookmarksData::REFERENCE, $patchedBookmark->getName());
     }
 
     public function testPatchBookmarkActionNotSubmitted()
@@ -191,5 +221,73 @@ class BookmarksControllerTest extends WebTestCase
         $bookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE_2);
         $response = $this->makePatchRequest('/bookmarks/' . $bookmark->getId())->client->getResponse();
         $this->assertForbidden($response);
+    }
+
+
+    public function testPostBookmarkAction()
+    {
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+
+        $requestParams = ['name' => 'new name', 'url' => 'https://schmaun.de', 'category' => $category->getId()];
+        $response = $this->makePostRequest(
+            '/bookmarks',
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $decodedResponse = json_decode($response->getContent(), false);
+
+        $this->assertInstanceOf('stdClass', $decodedResponse);
+        $this->assertEquals('new name', $decodedResponse->name);
+        $this->assertGreaterThan(0, $decodedResponse->id);
+        $this->assertStatusCodeInResponse($response, Response::HTTP_OK);
+    }
+
+    public function testPostBookmarkActionCategoryOwnerNotBookmarkOwner()
+    {
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE_2);
+
+        $requestParams = ['name' => 'new name', 'url' => 'https://schmaun.de', 'category' => $category->getId()];
+        $response = $this->makePostRequest(
+            '/bookmarks',
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
+        $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testPostBookmarkActionFormNotValid()
+    {
+        $response = $this->makePostRequest(
+            '/bookmarks',
+            ['name' => ''],
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]},"url":{"errors":["This value should not be blank."]},"category":{}}}}';
+        $this->assertEquals($expectedResponse, $response->getContent());
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testPostBookmarkActionFormNotSubmitted()
+    {
+        $response = $this->makePostRequest(
+            '/bookmarks',
+            [],
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
+        $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
     }
 }
