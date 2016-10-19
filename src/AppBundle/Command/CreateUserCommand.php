@@ -17,7 +17,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ->setName('app:user:create')
             ->setDescription('Creates a new user with root category')
             ->setHelp("Creates a new user including root category")
-            ->addArgument('username', InputArgument::OPTIONAL, 'The username of the user.')
+            ->addArgument('username', InputArgument::REQUIRED, 'The username of the user.')
             ->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'Password of the user. If none given the command asks interactively.')
         ;
     }
