@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Category
 {
+    const DEFAULT_ROOT_NAME = 'root';
+
     /**
      * @var int
      *

@@ -39,7 +39,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Category
      *
-     * @ORM\OneToOne(targetEntity="Category")
+     * @ORM\OneToOne(targetEntity="Category", cascade={"persist"})
      * @ORM\JoinColumn(name="root_category", referencedColumnName="id", onDelete="CASCADE")
      */
     private $rootCategory;

@@ -65,16 +65,16 @@ class CategoryRepositoryTest extends WebTestCase
 
     public function testSave()
     {
-        $category = $this->repository->get(LoadCategoriesData::ROOT_ID);
-
         $user = $this->fixtureRepository->getReference(LoadUsersData::REFERENCE_2);
+        $category = new Category();
         $category->setName('other Name');
         $category->setUser($user);
+
         $this->repository->save($category);
 
-        $saved = $this->repository->get(LoadCategoriesData::ROOT_ID);
-        $this->assertEquals($saved->getId(), $saved->getId());
-        $this->assertEquals($saved->getName(), $saved->getName());
-        $this->assertEquals($saved->getUser()->getId(), $saved->getUser()->getId());
+        $saved = $this->repository->get($category->getId());
+        $this->assertEquals($category->getId(), $saved->getId());
+        $this->assertEquals($category->getName(), $saved->getName());
+        $this->assertEquals($category->getUser()->getId(), $saved->getUser()->getId());
     }
 }

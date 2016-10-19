@@ -36,6 +36,11 @@
             <argument type="service" id="app.repository.category"/>
         </service>
 
+        <service class="AppBundle\Services\UserService" id="app.service.user" >
+            <argument type="service" id="app.repository.user"/>
+            <argument type="service" id="security.password_encoder"/>
+        </service>
+
         <service class="%app.repository.bookmarks.class%" id="app.repository.bookmarks">
             <factory service="doctrine.orm.entity_manager" method="getRepository" />
             <argument>AppBundle\Entity\Bookmark</argument>

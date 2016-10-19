@@ -6,6 +6,10 @@ bookmark controller fertig machen
 
 production setup script mit einem user und einer root category
 
+interface namespaces checken
+
+typehinting interfaces
+
 testGetBookmarksAction besser machen
 
 userhandling in controller
@@ -13,6 +17,8 @@ userhandling in controller
 test stabiler machen
 
 routing.xml ins bundle
+
+100% coverage
 
 bm controller aufräumen
 
@@ -22,4 +28,10 @@ kleine readme
 
 dann nach github mit dem scheiß :)
 
+gravisci oder so
+
+php7
+
 api best practices
+
+swagger

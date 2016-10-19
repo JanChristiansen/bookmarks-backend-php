@@ -2,9 +2,8 @@
 
 namespace AppBundle\Services;
 
-use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use Entity\Repository\CategoryRepository;
+use AppBundle\Interfaces\Repository\CategoryRepository;
 
 class BookmarkService
 {
