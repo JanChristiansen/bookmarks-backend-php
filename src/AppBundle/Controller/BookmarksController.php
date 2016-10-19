@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bookmark;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\BookmarkFormType;
 use AppBundle\Interfaces\Repository\BookmarkRepository;
@@ -37,10 +38,17 @@ class BookmarksController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Gets all bookmarks in the category tree
+     *
+     * @Nelmio\ApiDoc(
+     *  resource=true,
+     *  output={
+     *    "class"="array<AppBundle\Entity\Category>"
+     *  }
+     * )
      * @Rest\View(serializerGroups={"tree"})
      *
-     * @return Bookmark[]
+     * @return Category[]
      */
     public function getBookmarksAction()
     {
@@ -51,7 +59,13 @@ class BookmarksController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Get a single bookmark
+     *
+     * @Nelmio\ApiDoc(
+     *  output={
+     *    "class"="AppBundle\Entity\Bookmark"
+     *  }
+     * )
      * @Rest\View(serializerGroups={"bookmark"})
      *
      * @param Bookmark $bookmark
@@ -65,6 +79,8 @@ class BookmarksController extends AbstractController
     }
 
     /**
+     * Delete a bookmark
+     *
      * @Nelmio\ApiDoc()
      * @Rest\View(statusCode=204)
      */
@@ -75,7 +91,18 @@ class BookmarksController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Create a new bookmark
+     *
+     * @Nelmio\ApiDoc(
+     *  input="AppBundle\Form\Type\BookmarkFormType",
+     *  output={
+     *    "class"="AppBundle\Entity\Bookmark"
+     *  },
+     *  statusCodes={
+     *    200="Returned when successful",
+     *    400="Validation error"
+     *  }
+     * )
      * @Rest\View(serializerGroups={"bookmark"})
      *
      * @param Request $request
@@ -98,7 +125,15 @@ class BookmarksController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Change bookmark
+     *
+     * @Nelmio\ApiDoc(
+     *  input="AppBundle\Form\Type\BookmarkFormType",
+     *  statusCodes={
+     *    200="Returned when successful",
+     *    400="Validation error"
+     *  }
+     * )
      * @Rest\View(serializerGroups={"bookmark"})
      *
      * @param Bookmark $bookmark

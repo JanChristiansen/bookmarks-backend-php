@@ -2,9 +2,11 @@ category controller fertig machen
 
 bookmark controller fertig machen
 
+production setup script mit einem user und einer root category
+
 ---
 
-production setup script mit einem user und einer root category
+api doc
 
 interface namespaces checken
 

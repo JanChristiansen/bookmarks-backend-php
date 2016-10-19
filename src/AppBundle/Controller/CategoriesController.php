@@ -38,7 +38,15 @@ class CategoriesController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Gets all categories without the bookmarks
+     *
+     * @Nelmio\ApiDoc(
+     *  resource=true,
+     *  output={
+     *    "class"="array<AppBundle\Entity\Category>"
+     *  }
+     * )
+     *
      * @Rest\View(serializerGroups={"category"})
      *
      * @return Category[]
@@ -49,7 +57,14 @@ class CategoriesController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Get a single category
+     *
+     * @Nelmio\ApiDoc(
+     *  output={
+     *    "class"="AppBundle\Entity\Category"
+     *  }
+     * )
+     *
      * @Rest\View(serializerGroups={"category"})
      *
      * @param Category $category
@@ -63,6 +78,8 @@ class CategoriesController extends AbstractController
     }
 
     /**
+     * Delete a category
+     *
      * @Nelmio\ApiDoc()
      * @Rest\View(statusCode=204)
      */
@@ -73,7 +90,19 @@ class CategoriesController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Create a new category
+     *
+     * @Nelmio\ApiDoc(
+     *  input="AppBundle\Form\Type\CategoryFormType",
+     *  output={
+     *    "class"="AppBundle\Entity\Category"
+     *  },
+     *  statusCodes={
+     *    200="Returned when successful",
+     *    400="Validation error"
+     *  }
+     * )
+     *
      * @Rest\View(serializerGroups={"category"})
      *
      * @param Request $request
@@ -94,7 +123,15 @@ class CategoriesController extends AbstractController
     }
 
     /**
-     * @Nelmio\ApiDoc()
+     * Change the category
+     *
+     * @Nelmio\ApiDoc(
+     *  input="AppBundle\Form\Type\CategoryFormType",
+     *  statusCodes={
+     *    200="Returned when successful",
+     *    400="Validation error"
+     *  }
+     * )
      * @Rest\View(statusCode=204, serializerGroups={"category"})
      *
      * @param Category $category
