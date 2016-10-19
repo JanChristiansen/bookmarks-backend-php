@@ -4,19 +4,19 @@ bookmark controller fertig machen
 
 production setup script mit einem user und einer root category
 
----
-
 api doc
 
-interface namespaces checken
+---
+
+interface namespaces checken und klassen namen checken
 
 typehinting interfaces
 
 testGetBookmarksAction besser machen
 
-userhandling in controller
+userhandling in controller?
 
-test stabiler machen
+test stabiler machen?
 
 routing.xml ins bundle
 
