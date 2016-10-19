@@ -63,14 +63,18 @@ class BookmarkTest extends \PHPUnit_Framework_TestCase
 
     public function testGetterSetter()
     {
+        $category = new Category();
         $bookmark = new Bookmark();
         $bookmark->setClicks(123);
         $bookmark->setPosition(3);
-
+        $bookmark->setId(111);
+        $bookmark->setUrl('111');
+        $bookmark->setCategory($category);
 
         $this->assertEquals(123, $bookmark->getClicks());
         $this->assertEquals(3, $bookmark->getPosition());
-
-
+        $this->assertEquals(111, $bookmark->getId());
+        $this->assertEquals('111', $bookmark->getUrl());
+        $this->assertEquals($category, $bookmark->getCategory());
     }
 }
