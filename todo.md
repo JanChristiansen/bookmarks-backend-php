@@ -19,6 +19,8 @@ patch/post category parent hinzufügen
 
 testGetBookmarksAction besser machen
 
+remove validators
+
 userhandling in controller?
 
 test stabiler machen?
