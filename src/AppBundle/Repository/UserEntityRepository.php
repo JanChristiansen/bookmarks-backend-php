@@ -10,7 +10,7 @@ class UserEntityRepository extends EntityRepository implements UserRepository
 {
     /**
      * @param int $id
-     * @return User|null
+     * @return User|object|null
      */
     public function get($id)
     {

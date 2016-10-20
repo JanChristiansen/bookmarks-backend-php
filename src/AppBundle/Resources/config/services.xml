@@ -4,19 +4,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="app.controller.bookmarks.class">AppBundle\Controller\BookmarksController</parameter>
-        <parameter key="app.controller.categories.class">AppBundle\Controller\CategoriesController</parameter>
-
-        <parameter key="app.service.bookmark.class">AppBundle\Services\BookmarkService</parameter>
-
-        <parameter key="app.repository.bookmarks.class">AppBundle\Repository\BookmarkEntityRepository</parameter>
-        <parameter key="app.repository.categories.class">AppBundle\Repository\CategoryEntityRepository</parameter>
-        <parameter key="app.repository.user.class">AppBundle\Repository\UserEntityRepository</parameter>
-    </parameters>
-
     <services>
-        <service class="%app.controller.bookmarks.class%" id="app.controller.bookmarks">
+        <service class="AppBundle\Controller\BookmarksController" id="app.controller.bookmarks">
             <call method="setContainer">
                 <argument id="service_container" type="service"/>
             </call>
@@ -24,7 +13,7 @@
             <argument type="service" id="app.service.bookmark"/>
         </service>
 
-        <service class="%app.controller.categories.class%" id="app.controller.categories">
+        <service class="AppBundle\Controller\CategoriesController" id="app.controller.categories">
             <call method="setContainer">
                 <argument id="service_container" type="service"/>
             </call>
@@ -32,7 +21,7 @@
             <argument type="service" id="app.service.bookmark"/>
         </service>
 
-        <service class="%app.service.bookmark.class%" id="app.service.bookmark" >
+        <service class="AppBundle\Services\BookmarkService" id="app.service.bookmark" >
             <argument type="service" id="app.repository.category"/>
         </service>
 
@@ -41,17 +30,17 @@
             <argument type="service" id="security.password_encoder"/>
         </service>
 
-        <service class="%app.repository.bookmarks.class%" id="app.repository.bookmarks">
+        <service class="AppBundle\Repository\BookmarkEntityRepository" id="app.repository.bookmarks">
             <factory service="doctrine.orm.entity_manager" method="getRepository" />
             <argument>AppBundle\Entity\Bookmark</argument>
         </service>
 
-        <service class="%app.repository.categories.class%" id="app.repository.category">
+        <service class="AppBundle\Repository\CategoryEntityRepository" id="app.repository.category">
             <factory service="doctrine.orm.entity_manager" method="getRepository" />
             <argument>AppBundle\Entity\Category</argument>
         </service>
 
-        <service class="%app.repository.user.class%" id="app.repository.user">
+        <service class="AppBundle\Repository\UserEntityRepository" id="app.repository.user">
             <factory service="doctrine.orm.entity_manager" method="getRepository" />
             <argument>AppBundle\Entity\User</argument>
         </service>

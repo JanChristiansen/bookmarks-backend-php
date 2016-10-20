@@ -13,10 +13,9 @@ class BookmarkService
     private $categoryRepository;
 
     /**
-     * BookmarkService constructor.
-     * @param $categoryRepository
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct($categoryRepository)
+    public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }

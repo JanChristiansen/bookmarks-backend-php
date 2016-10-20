@@ -10,7 +10,7 @@ class BookmarkEntityRepository extends EntityRepository implements BookmarkRepos
 {
     /**
      * @param int $id
-     * @return null|Bookmark
+     * @return null|object|Bookmark
      */
     public function get($id)
     {

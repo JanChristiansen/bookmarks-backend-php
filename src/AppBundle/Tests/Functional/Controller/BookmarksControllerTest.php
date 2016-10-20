@@ -187,10 +187,7 @@ class BookmarksControllerTest extends WebTestCase
             ['Content-Type' => 'application/x-www-form-urlencoded']
         )->client->getResponse();
 
-        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
-        $this->assertEquals($expectedResponse, trim($response->getContent()));
-        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
-
+        $this->assertForbidden($response);
         $patchedBookmark = $this->fixtures->getReference(LoadBookmarksData::REFERENCE);
         $this->assertEquals(LoadBookmarksData::REFERENCE, $patchedBookmark->getName());
     }
@@ -258,9 +255,7 @@ class BookmarksControllerTest extends WebTestCase
             ['Content-Type' => 'application/x-www-form-urlencoded']
         )->client->getResponse();
 
-        $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
-        $this->assertEquals($expectedResponse, trim($response->getContent()));
-        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+        $this->assertForbidden($response);
     }
 
     public function testPostBookmarkActionFormNotValid()

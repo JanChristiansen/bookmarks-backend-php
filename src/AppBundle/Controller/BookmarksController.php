@@ -44,6 +44,9 @@ class BookmarksController extends AbstractController
      *  resource=true,
      *  output={
      *    "class"="array<AppBundle\Entity\Category>"
+     *  },
+     *  statusCodes={
+     *    200="Returned when successful"
      *  }
      * )
      * @Rest\View(serializerGroups={"tree"})
@@ -52,10 +55,7 @@ class BookmarksController extends AbstractController
      */
     public function getBookmarksAction()
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        return $this->bookmarkService->getTree($user);
+        return $this->bookmarkService->getTree($this->getUser());
     }
 
     /**
@@ -64,6 +64,10 @@ class BookmarksController extends AbstractController
      * @Nelmio\ApiDoc(
      *  output={
      *    "class"="AppBundle\Entity\Bookmark"
+     *  },
+     *  statusCodes={
+     *    200="Returned when successful",
+     *    403="Access denied"
      *  }
      * )
      * @Rest\View(serializerGroups={"bookmark"})
@@ -81,7 +85,12 @@ class BookmarksController extends AbstractController
     /**
      * Delete a bookmark
      *
-     * @Nelmio\ApiDoc()
+     * @Nelmio\ApiDoc(
+     *  statusCodes={
+     *    204="Returned when successful",
+     *    403="Access denied"
+     *  }
+     * )
      * @Rest\View(statusCode=204)
      */
     public function deleteBookmarkAction(Bookmark $bookmark)
@@ -100,7 +109,8 @@ class BookmarksController extends AbstractController
      *  },
      *  statusCodes={
      *    200="Returned when successful",
-     *    400="Validation error"
+     *    400="Validation error",
+     *    403="Access denied"
      *  }
      * )
      * @Rest\View(serializerGroups={"bookmark"})
@@ -116,7 +126,7 @@ class BookmarksController extends AbstractController
             return View::create($form, Response::HTTP_BAD_REQUEST);
         }
 
-        $this->checkCategoryAndBookmarkOwner($bookmark);
+        $this->checkCategoryOwner($bookmark->getCategory());
 
         $bookmark->setUser($this->getUser());
         $this->bookmarkRepository->save($bookmark);
@@ -131,7 +141,8 @@ class BookmarksController extends AbstractController
      *  input="AppBundle\Form\Type\BookmarkFormType",
      *  statusCodes={
      *    200="Returned when successful",
-     *    400="Validation error"
+     *    400="Validation error",
+     *    403="Access denied"
      *  }
      * )
      * @Rest\View(serializerGroups={"bookmark"})
@@ -149,7 +160,7 @@ class BookmarksController extends AbstractController
             return View::create($form, Response::HTTP_BAD_REQUEST);
         }
 
-        $this->checkCategoryAndBookmarkOwner($bookmark);
+        $this->checkCategoryOwner($bookmark->getCategory());
         $this->bookmarkRepository->save($bookmark);
 
         return $this->view(null, Response::HTTP_NO_CONTENT);
@@ -166,12 +177,12 @@ class BookmarksController extends AbstractController
     }
 
     /**
-     * @param $bookmark
+     * @param Category $category
      */
-    private function checkCategoryAndBookmarkOwner($bookmark)
+    private function checkCategoryOwner(Category $category)
     {
-        if (!$bookmark->getCategory()->isOwner($this->getUser())) {
-            throw new BadRequestHttpException('User mismatch');
+        if (!$category->isOwner($this->getUser())) {
+            throw $this->createAccessDeniedException();
         }
     }
 }

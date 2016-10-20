@@ -4,11 +4,11 @@ namespace AppBundle\Interfaces\Repository;
 
 use AppBundle\Entity\Category;
 
-interface CategoryRepository
+interface CategoryRepository extends \Gedmo\Tree\RepositoryInterface
 {
     /**
      * @param int $id
-     * @return null|Category
+     * @return null|object|Category
      */
     public function get($id);
 

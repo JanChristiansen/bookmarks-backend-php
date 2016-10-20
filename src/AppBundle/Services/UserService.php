@@ -11,11 +11,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserService
 {
     /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
      * @var UserRepository
      */
     private $userRepository;
@@ -25,7 +20,6 @@ class UserService
     private $passwordEncoder;
 
     /**
-     * BookmarkService constructor.
      * @param UserRepository $userRepository
      * @param UserPasswordEncoderInterface $passwordEncoder
      */

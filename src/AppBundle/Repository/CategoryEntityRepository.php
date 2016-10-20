@@ -13,7 +13,7 @@ class CategoryEntityRepository extends NestedTreeRepository implements CategoryR
 
     /**
      * @param int $id
-     * @return null|Category
+     * @return null|object|Category
      */
     public function get($id)
     {

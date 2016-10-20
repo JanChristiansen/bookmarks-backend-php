@@ -44,6 +44,9 @@ class CategoriesController extends AbstractController
      *  resource=true,
      *  output={
      *    "class"="array<AppBundle\Entity\Category>"
+     *  },
+     *  statusCodes={
+     *    200="Returned when successful"
      *  }
      * )
      *
@@ -62,6 +65,10 @@ class CategoriesController extends AbstractController
      * @Nelmio\ApiDoc(
      *  output={
      *    "class"="AppBundle\Entity\Category"
+     *  },
+     *  statusCodes={
+     *    200="Returned when successful",
+     *    403="Access denied"
      *  }
      * )
      *
@@ -80,7 +87,12 @@ class CategoriesController extends AbstractController
     /**
      * Delete a category
      *
-     * @Nelmio\ApiDoc()
+     * @Nelmio\ApiDoc(
+     *  statusCodes={
+     *    204="Returned when successful",
+     *    403="Access denied"
+     *  }
+     * )
      * @Rest\View(statusCode=204)
      */
     public function deleteCategoryAction(Category $category)
@@ -129,7 +141,8 @@ class CategoriesController extends AbstractController
      *  input="AppBundle\Form\Type\CategoryFormType",
      *  statusCodes={
      *    200="Returned when successful",
-     *    400="Validation error"
+     *    400="Validation error",
+     *    403="Access denied"
      *  }
      * )
      * @Rest\View(statusCode=204, serializerGroups={"category"})

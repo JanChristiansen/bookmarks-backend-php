@@ -11,7 +11,7 @@ interface UserRepository
 {
     /**
      * @param int $id
-     * @return User|null
+     * @return User|null|object
      */
     public function get($id);
 
