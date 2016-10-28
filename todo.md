@@ -17,6 +17,10 @@ typehinting interfaces
 
 patch/post category parent hinzufügen
 
+validation category checken
+
+validation bookmark checken
+
 testGetBookmarksAction besser machen
 
 remove validators

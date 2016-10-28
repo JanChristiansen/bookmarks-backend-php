@@ -3,8 +3,10 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use AppBundle\Interfaces\Repository\CategoryRepository;
 use Doctrine\DBAL\LockMode;
+use Doctrine\ORM\QueryBuilder;
 use Exception;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
@@ -55,5 +57,17 @@ class CategoryEntityRepository extends NestedTreeRepository implements CategoryR
     {
         $this->_em->persist($category);
         $this->_em->flush($category);
+    }
+
+    /**
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function getCategoriesForUserQueryBuilder(User $user)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.user = :userId')
+            ->orderBy('c.name', 'ASC')
+            ->setParameters(['userId' => $user->getId()]);
     }
 }

@@ -3,6 +3,8 @@
 namespace AppBundle\Interfaces\Repository;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
+use Doctrine\ORM\QueryBuilder;
 
 interface CategoryRepository extends \Gedmo\Tree\RepositoryInterface
 {
@@ -27,4 +29,10 @@ interface CategoryRepository extends \Gedmo\Tree\RepositoryInterface
      * @param Category $category
      */
     public function save($category);
+
+    /**
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function getCategoriesForUserQueryBuilder(User $user);
 }

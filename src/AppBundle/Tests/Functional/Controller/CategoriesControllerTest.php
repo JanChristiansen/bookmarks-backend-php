@@ -130,7 +130,7 @@ class CategoriesControllerTest extends WebTestCase
 
     public function testPatchCategoryActionFormNotValid()
     {
-        $requestParams = ['name' => ''];
+        $requestParams = ['name' => '', 'parent' => 123];
         /** @var Category $category */
         $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
         $response = $this->makePatchRequest(
@@ -140,7 +140,7 @@ class CategoriesControllerTest extends WebTestCase
             ['Content-Type' => 'application/x-www-form-urlencoded',]
         )->client->getResponse();
 
-        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]}}}}';
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]},"parent":{"errors":["This value is not valid."]}}}}';
         $this->assertEquals($expectedResponse, $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
 
@@ -182,9 +182,30 @@ class CategoriesControllerTest extends WebTestCase
         $this->assertNotFound($response);
     }
 
+    public function testPatchCategoryActionParentOwnerNotCategoryOwner()
+    {
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE_2);
+
+        $requestParams = ['name' => 'new name', 'parent' => $category->getId()];
+        $response = $this->makePostRequest(
+            '/categories',
+            $requestParams,
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded']
+        )->client->getResponse();
+
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{},"parent":{"errors":["This value is not valid."]}}}}';
+        $this->assertEquals($expectedResponse, $response->getContent());
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+
+        $patchedCategory = $this->fixtures->getReference(LoadCategoriesData::REFERENCE);
+        $this->assertEquals('category-11', $patchedCategory->getName());
+    }
+
     public function testPostCategoryAction()
     {
-        $requestParams = ['name' => 'new name'];
+        $requestParams = ['name' => 'new name', 'parent' => LoadCategoriesData::ROOT_ID];
         $response = $this->makePostRequest(
             '/categories',
             $requestParams,
@@ -194,12 +215,12 @@ class CategoriesControllerTest extends WebTestCase
 
         $decodedResponse = json_decode($response->getContent(), false);
 
+        $this->assertStatusCodeInResponse($response, Response::HTTP_OK);
         $this->assertInstanceOf('stdClass', $decodedResponse);
         $this->assertInternalType('array', $decodedResponse->children);
         $this->assertCount(0, $decodedResponse->children);
         $this->assertEquals('new name', $decodedResponse->name);
         $this->assertGreaterThan(0, $decodedResponse->id);
-        $this->assertStatusCodeInResponse($response, Response::HTTP_OK);
     }
 
     public function testPostCategoryActionFormNotValid()
@@ -211,7 +232,7 @@ class CategoriesControllerTest extends WebTestCase
             ['Content-Type' => 'application/x-www-form-urlencoded',]
         )->client->getResponse();
 
-        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]}}}}';
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]},"parent":{"errors":["This value should not be blank."]}}}}';
         $this->assertEquals($expectedResponse, $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
     }
@@ -227,6 +248,23 @@ class CategoriesControllerTest extends WebTestCase
 
         $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
         $this->assertEquals($expectedResponse, trim($response->getContent()));
+        $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testPostCategoryActionParentOwnerNotCategoryOwner()
+    {
+        /** @var Category $category */
+        $category = $this->fixtures->getReference(LoadCategoriesData::REFERENCE_2);
+
+        $response = $this->makePostRequest(
+            '/categories',
+            ['name' => 'new name', 'parent' => $category->getId()],
+            [],
+            ['Content-Type' => 'application/x-www-form-urlencoded',]
+        )->client->getResponse();
+
+        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{},"parent":{"errors":["This value is not valid."]}}}}';
+        $this->assertEquals($expectedResponse, $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
     }
 }

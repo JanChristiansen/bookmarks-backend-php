@@ -7,7 +7,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryEntityRepository;
 use AppBundle\Services\BookmarkService;
-use AppBundle\Tests\Functional\Repository\CategoryRepositoryTest;
+use AppBundle\Tests\Functional\Repository\CategoryEntityRepositoryTest;
 
 class BookmarkServiceTest extends \PHPUnit_Framework_TestCase
 {

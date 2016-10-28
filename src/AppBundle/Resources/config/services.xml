@@ -44,5 +44,6 @@
             <factory service="doctrine.orm.entity_manager" method="getRepository" />
             <argument>AppBundle\Entity\User</argument>
         </service>
+
     </services>
 </container>

@@ -80,6 +80,7 @@ class Category
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @Assert\NotBlank()
      */
     private $parent;
 

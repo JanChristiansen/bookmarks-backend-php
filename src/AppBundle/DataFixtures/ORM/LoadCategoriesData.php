@@ -12,6 +12,7 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
 {
     const ROOT_ID = 1;
     const CATEGORY_ROOT = 'category-root';
+    const CATEGORY_ROOT_2 = 'category-root-user2';
     const REFERENCE = 'category-11';
     const REFERENCE_2 = 'category-user2-11';
 
@@ -73,8 +74,9 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
 
         $root2 = new Category();
         $root2->setName('root2');
-        //$root->setId(self::ROOT_ID);
+        $root2->setUser($this->getReference(LoadUsersData::REFERENCE_2));
         $manager->persist($root2);
+        $this->addReference(self::CATEGORY_ROOT_2, $root2);
 
         /** @var Category[] $children1 */
         $children1 = array();
@@ -92,6 +94,10 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
         /** @var User $user1 */
         $user1 = $this->getReference(LoadUsersData::REFERENCE);
         $user1->setRootCategory($root);
+
+        /** @var User $user1 */
+        $user2 = $this->getReference(LoadUsersData::REFERENCE_2);
+        $user2->setRootCategory($root2);
 
         $manager->flush();
     }

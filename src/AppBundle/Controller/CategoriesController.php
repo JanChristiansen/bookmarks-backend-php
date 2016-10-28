@@ -111,7 +111,8 @@ class CategoriesController extends AbstractController
      *  },
      *  statusCodes={
      *    200="Returned when successful",
-     *    400="Validation error"
+     *    400="Validation error",
+     *    403="Access denied"
      *  }
      * )
      *
@@ -123,8 +124,9 @@ class CategoriesController extends AbstractController
     public function postCategoriesAction(Request $request)
     {
         $category = new Category();
-        $form = $this->createForm(CategoryFormType::class, $category);
+        $form = $this->createForm(CategoryFormType::class, $category, ['user' => $this->getUser()]);
         if ($this->handleForm($form, $request)) {
+            $this->checkCategoryOwner($category->getParent());
             $category->setUser($this->getUser());
             $this->categoryRepository->save($category);
 
@@ -155,8 +157,13 @@ class CategoriesController extends AbstractController
     {
         $this->checkCategoryOwner($category);
 
-        $form = $this->createForm(CategoryFormType::class, $category, ['method' => Request::METHOD_PATCH]);
+        $form = $this->createForm(
+            CategoryFormType::class,
+            $category,
+            ['method' => Request::METHOD_PATCH, 'user' => $this->getUser()]
+        );
         if ($this->handleForm($form, $request)) {
+            $this->checkCategoryOwner($category->getParent());
             $this->categoryRepository->save($category);
 
             return $this->view(null, Response::HTTP_NO_CONTENT);

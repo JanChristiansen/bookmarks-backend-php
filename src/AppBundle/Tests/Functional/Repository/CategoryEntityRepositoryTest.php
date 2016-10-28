@@ -7,11 +7,13 @@ use AppBundle\DataFixtures\ORM\LoadFullTreeBookmarksData;
 use AppBundle\DataFixtures\ORM\LoadFullTreeCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryEntityRepository;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Doctrine\ORM\QueryBuilder;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
-class CategoryRepositoryTest extends WebTestCase
+class CategoryEntityRepositoryTest extends WebTestCase
 {
     /**
      * @var CategoryEntityRepository
@@ -76,5 +78,37 @@ class CategoryRepositoryTest extends WebTestCase
         $this->assertEquals($category->getId(), $saved->getId());
         $this->assertEquals($category->getName(), $saved->getName());
         $this->assertEquals($category->getUser()->getId(), $saved->getUser()->getId());
+    }
+
+    public function testGetCategoriesForUserQueryBuilder()
+    {
+        $user = new User();
+
+        $queryBuilder = $this->getMockWithoutInvokingTheOriginalConstructor(QueryBuilder::class);
+        $queryBuilder->expects($this->once())
+            ->method('where')
+            ->with('c.user = :userId')
+            ->willReturn($queryBuilder);
+        $queryBuilder->expects($this->once())
+            ->method('orderBy')
+            ->with('c.name', 'ASC')
+            ->willReturn($queryBuilder);
+        $queryBuilder->expects($this->once())
+            ->method('setParameters')
+            ->with(['userId' => $user->getId()])
+            ->willReturn($queryBuilder);
+
+        /** @var CategoryEntityRepository|\PHPUnit_Framework_MockObject_MockObject $repository */
+        $repository = $this->getMockBuilder(CategoryEntityRepository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['createQueryBuilder'])
+            ->getMock();
+        $repository->expects($this->once())
+            ->method('createQueryBuilder')
+            ->with('c')
+            ->willReturn($queryBuilder);
+
+        $actualBuilder = $repository->getCategoriesForUserQueryBuilder($user);
+        $this->assertEquals($queryBuilder, $actualBuilder);
     }
 }

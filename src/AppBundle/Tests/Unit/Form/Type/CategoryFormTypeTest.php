@@ -3,18 +3,20 @@
 namespace AppBundle\Tests\Unit\Form\Type;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\User;
 use AppBundle\Form\Type\CategoryFormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class CategoryFormTypeTest extends TypeTestCase
+class CategoryFormTypeTest extends AbstractFormTypeTestCase
 {
     public function testSubmitValidData()
     {
         $formData = array(
             'name' => 'blablabla',
+            'parent' => 123
         );
 
-        $form = $this->factory->create(CategoryFormType::class);
+        $form = $this->factory->create(CategoryFormType::class, null, ['user' => new User()]);
 
         $object = new Category();
         $object->setName('blablabla');
@@ -37,5 +39,15 @@ class CategoryFormTypeTest extends TypeTestCase
     {
         $formType = new CategoryFormType();
         $this->assertEquals('', $formType->getBlockPrefix());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getEntities()
+    {
+        return array_merge(parent::getEntities(), array(
+            Category::class,
+        ));
     }
 }
