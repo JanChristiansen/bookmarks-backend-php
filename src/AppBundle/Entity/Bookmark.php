@@ -55,6 +55,7 @@ class Bookmark
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="bookmarks")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     protected $category;
 

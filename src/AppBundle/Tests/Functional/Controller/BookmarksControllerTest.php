@@ -150,7 +150,7 @@ class BookmarksControllerTest extends WebTestCase
         $this->assertEquals('gopher://old', $patchedBookmark->getUrl());
     }
 
-    public function testPatchCategoryActionFormNotValid()
+    public function testPatchBookmarkActionFormNotValid()
     {
         $requestParams = ['name' => 'new name', 'category' => -1];
 
@@ -220,7 +220,6 @@ class BookmarksControllerTest extends WebTestCase
         $this->assertForbidden($response);
     }
 
-
     public function testPostBookmarkAction()
     {
         /** @var Category $category */
@@ -258,16 +257,29 @@ class BookmarksControllerTest extends WebTestCase
         $this->assertForbidden($response);
     }
 
-    public function testPostBookmarkActionFormNotValid()
+    public function provideInvalidParametersAndResponse()
+    {
+        return [
+            [['name' => ''], '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]},"url":{"errors":["This value should not be blank."]},"category":{"errors":["This value should not be blank."]}}}}'],
+            [['name' => 'hallo'], '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{},"url":{"errors":["This value should not be blank."]},"category":{"errors":["This value should not be blank."]}}}}'],
+            [['name' => 'hallo', 'url' => 'whatever'], '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{},"url":{},"category":{"errors":["This value should not be blank."]}}}}'],
+        ];
+    }
+
+    /**
+     * @param string $parameter
+     * @param string $expectedResponse
+     * @dataProvider provideInvalidParametersAndResponse
+     */
+    public function testPostBookmarkActionFormNotValid($parameter, $expectedResponse)
     {
         $response = $this->makePostRequest(
             '/bookmarks',
-            ['name' => ''],
+            $parameter,
             [],
             ['Content-Type' => 'application/x-www-form-urlencoded',]
         )->client->getResponse();
 
-        $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{"errors":["This value should not be blank."]},"url":{"errors":["This value should not be blank."]},"category":{}}}}';
         $this->assertEquals($expectedResponse, $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
     }
