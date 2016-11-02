@@ -12,10 +12,10 @@ interface namespaces checken und klassen namen checken
 
 typehinting interfaces
 
+patch/post category parent hinzufügen
+
 ---
 **ToDo**
-
-patch/post category parent hinzufügen
 
 validation category checken
 
