@@ -150,6 +150,15 @@ class WebTestCase extends LiipWebTestCase
     /**
      * @param Response $response
      */
+    protected function assertNotAuthenticated(Response $response)
+    {
+        $this->assertJsonResponse($response, 401);
+        $this->assertEmpty($response->getContent());
+    }
+
+    /**
+     * @param Response $response
+     */
     protected function assertNoContent(Response $response)
     {
         $this->assertEmpty($response->getContent(), $response->getContent());

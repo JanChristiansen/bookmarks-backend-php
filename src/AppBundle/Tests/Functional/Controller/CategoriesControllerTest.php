@@ -267,4 +267,28 @@ class CategoriesControllerTest extends WebTestCase
         $this->assertEquals($expectedResponse, $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
     }
+
+    public function provideUrls()
+    {
+        return [
+            ['GET', '/categories/1'],
+            ['GET', '/categories'],
+            ['DELETE', '/categories/1'],
+            ['POST', '/categories'],
+            ['PATCH', '/categories/1'],
+        ];
+    }
+
+    /**
+     * @param string $method
+     * @param string $url
+     * @dataProvider provideUrls
+     */
+    public function testNotAuthenticated($method, $url)
+    {
+        $this->setBasicAuthentication(null, null);
+
+        $response = $this->makeRequest($method, $url, [])->client->getResponse();
+        $this->assertNotAuthenticated($response);
+    }
 }

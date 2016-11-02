@@ -52,7 +52,207 @@ class BookmarksControllerTest extends WebTestCase
     {
         $this->setBasicAuthentication(LoadFullTreeUsersData::USERNAME_TREE, LoadFullTreeUsersData::PASSWORD_TREE);
 
-        $expectedResponse = '[{"id":12,"name":"category-11","children":[],"bookmarks":[{"id":3,"name":"bookmark-0","url":"http:\/\/category-11.com\/free-snowden\/0","clicks":124,"position":0},{"id":4,"name":"bookmark-1","url":"http:\/\/category-11.com\/free-snowden\/1","clicks":124,"position":1},{"id":5,"name":"bookmark-2","url":"http:\/\/category-11.com\/free-snowden\/2","clicks":124,"position":2},{"id":6,"name":"bookmark-3","url":"http:\/\/category-11.com\/free-snowden\/3","clicks":124,"position":3},{"id":7,"name":"bookmark-4","url":"http:\/\/category-11.com\/free-snowden\/4","clicks":124,"position":4},{"id":8,"name":"bookmark-5","url":"http:\/\/category-11.com\/free-snowden\/5","clicks":124,"position":5},{"id":9,"name":"bookmark-6","url":"http:\/\/category-11.com\/free-snowden\/6","clicks":124,"position":6},{"id":10,"name":"bookmark-7","url":"http:\/\/category-11.com\/free-snowden\/7","clicks":124,"position":7},{"id":11,"name":"bookmark-8","url":"http:\/\/category-11.com\/free-snowden\/8","clicks":124,"position":8},{"id":12,"name":"bookmark-9","url":"http:\/\/category-11.com\/free-snowden\/9","clicks":124,"position":9},{"id":19,"name":"unique","url":"http:\/\/category-11.com\/free-snowden\/6","clicks":43,"position":6}]},{"id":13,"name":"category-12","children":[{"id":16,"name":"category-12-11","children":[],"bookmarks":[]},{"id":17,"name":"category-12-12","children":[],"bookmarks":[]},{"id":18,"name":"category-12-13","children":[],"bookmarks":[]}],"bookmarks":[]},{"id":14,"name":"category-13","children":[{"id":19,"name":"category-13-11","children":[{"id":22,"name":"category-13-11-11","children":[],"bookmarks":[{"id":13,"name":"bookmark-0","url":"http:\/\/category-13-11-11.com\/free-snowden\/0","clicks":3,"position":0},{"id":14,"name":"bookmark-1","url":"http:\/\/category-13-11-11.com\/free-snowden\/1","clicks":3,"position":1},{"id":15,"name":"bookmark-2","url":"http:\/\/category-13-11-11.com\/free-snowden\/2","clicks":3,"position":2},{"id":16,"name":"bookmark-3","url":"http:\/\/category-13-11-11.com\/free-snowden\/3","clicks":3,"position":3},{"id":17,"name":"bookmark-4","url":"http:\/\/category-13-11-11.com\/free-snowden\/4","clicks":3,"position":4},{"id":18,"name":"bookmark-5","url":"http:\/\/category-13-11-11.com\/free-snowden\/5","clicks":3,"position":5}]},{"id":23,"name":"category-13-11-12","children":[],"bookmarks":[]}],"bookmarks":[]},{"id":20,"name":"category-13-12","children":[],"bookmarks":[]},{"id":21,"name":"category-13-13","children":[],"bookmarks":[]}],"bookmarks":[]},{"id":15,"name":"category-14","children":[],"bookmarks":[]}]';
+        $expectedResponse = <<<EXPECTED_RESPONSE
+[
+    {
+        "id": 12,
+        "name": "category-11",
+        "children": [],
+        "bookmarks": [
+            {
+                "id": 3,
+                "name": "bookmark-0",
+                "url": "http:\/\/category-11.com\/free-snowden\/0",
+                "clicks": 124,
+                "position": 0
+            },
+            {
+                "id": 4,
+                "name": "bookmark-1",
+                "url": "http:\/\/category-11.com\/free-snowden\/1",
+                "clicks": 124,
+                "position": 1
+            },
+            {
+                "id": 5,
+                "name": "bookmark-2",
+                "url": "http:\/\/category-11.com\/free-snowden\/2",
+                "clicks": 124,
+                "position": 2
+            },
+            {
+                "id": 6,
+                "name": "bookmark-3",
+                "url": "http:\/\/category-11.com\/free-snowden\/3",
+                "clicks": 124,
+                "position": 3
+            },
+            {
+                "id": 7,
+                "name": "bookmark-4",
+                "url": "http:\/\/category-11.com\/free-snowden\/4",
+                "clicks": 124,
+                "position": 4
+            },
+            {
+                "id": 8,
+                "name": "bookmark-5",
+                "url": "http:\/\/category-11.com\/free-snowden\/5",
+                "clicks": 124,
+                "position": 5
+            },
+            {
+                "id": 9,
+                "name": "bookmark-6",
+                "url": "http:\/\/category-11.com\/free-snowden\/6",
+                "clicks": 124,
+                "position": 6
+            },
+            {
+                "id": 10,
+                "name": "bookmark-7",
+                "url": "http:\/\/category-11.com\/free-snowden\/7",
+                "clicks": 124,
+                "position": 7
+            },
+            {
+                "id": 11,
+                "name": "bookmark-8",
+                "url": "http:\/\/category-11.com\/free-snowden\/8",
+                "clicks": 124,
+                "position": 8
+            },
+            {
+                "id": 12,
+                "name": "bookmark-9",
+                "url": "http:\/\/category-11.com\/free-snowden\/9",
+                "clicks": 124,
+                "position": 9
+            },
+            {
+                "id": 19,
+                "name": "unique",
+                "url": "http:\/\/category-11.com\/free-snowden\/6",
+                "clicks": 43,
+                "position": 6
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "category-12",
+        "children": [
+            {
+                "id": 16,
+                "name": "category-12-11",
+                "children": [],
+                "bookmarks": []
+            },
+            {
+                "id": 17,
+                "name": "category-12-12",
+                "children": [],
+                "bookmarks": []
+            },
+            {
+                "id": 18,
+                "name": "category-12-13",
+                "children": [],
+                "bookmarks": []
+            }
+        ],
+        "bookmarks": []
+    },
+    {
+        "id": 14,
+        "name": "category-13",
+        "children": [
+            {
+                "id": 19,
+                "name": "category-13-11",
+                "children": [
+                    {
+                        "id": 22,
+                        "name": "category-13-11-11",
+                        "children": [],
+                        "bookmarks": [
+                            {
+                                "id": 13,
+                                "name": "bookmark-0",
+                                "url": "http:\/\/category-13-11-11.com\/free-snowden\/0",
+                                "clicks": 3,
+                                "position": 0
+                            },
+                            {
+                                "id": 14,
+                                "name": "bookmark-1",
+                                "url": "http:\/\/category-13-11-11.com\/free-snowden\/1",
+                                "clicks": 3,
+                                "position": 1
+                            },
+                            {
+                                "id": 15,
+                                "name": "bookmark-2",
+                                "url": "http:\/\/category-13-11-11.com\/free-snowden\/2",
+                                "clicks": 3,
+                                "position": 2
+                            },
+                            {
+                                "id": 16,
+                                "name": "bookmark-3",
+                                "url": "http:\/\/category-13-11-11.com\/free-snowden\/3",
+                                "clicks": 3,
+                                "position": 3
+                            },
+                            {
+                                "id": 17,
+                                "name": "bookmark-4",
+                                "url": "http:\/\/category-13-11-11.com\/free-snowden\/4",
+                                "clicks": 3,
+                                "position": 4
+                            },
+                            {
+                                "id": 18,
+                                "name": "bookmark-5",
+                                "url": "http:\/\/category-13-11-11.com\/free-snowden\/5",
+                                "clicks": 3,
+                                "position": 5
+                            }
+                        ]
+                    },
+                    {
+                        "id": 23,
+                        "name": "category-13-11-12",
+                        "children": [],
+                        "bookmarks": []
+                    }
+                ],
+                "bookmarks": []
+            },
+            {
+                "id": 20,
+                "name": "category-13-12",
+                "children": [],
+                "bookmarks": []
+            },
+            {
+                "id": 21,
+                "name": "category-13-13",
+                "children": [],
+                "bookmarks": []
+            }
+        ],
+        "bookmarks": []
+    },
+    {
+        "id": 15,
+        "name": "category-14",
+        "children": [],
+        "bookmarks": []
+    }
+]
+EXPECTED_RESPONSE;
+
         $response = $this->makeGetRequest('/bookmarks')->client->getResponse();
         $content = $response->getContent();
 
@@ -60,7 +260,7 @@ class BookmarksControllerTest extends WebTestCase
 
         $decodedResponse = json_decode($content, false);
         $this->assertInternalType('array', $decodedResponse);
-        $this->assertEquals($expectedResponse, $content);
+        $this->assertJsonStringEqualsJsonString($expectedResponse, $content);
         $this->assertCount(4, $decodedResponse);
     }
 
@@ -296,5 +496,29 @@ class BookmarksControllerTest extends WebTestCase
         $expectedResponse = '{"error":{"code":400,"message":"Bad Request"}}';
         $this->assertEquals($expectedResponse, trim($response->getContent()));
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
+    }
+
+    public function provideUrls()
+    {
+        return [
+            ['GET', '/bookmarks/1'],
+            ['GET', '/bookmarks'],
+            ['DELETE', '/bookmarks/1'],
+            ['POST', '/bookmarks'],
+            ['PATCH', '/bookmarks/1'],
+        ];
+    }
+
+    /**
+     * @param string $method
+     * @param string $url
+     * @dataProvider provideUrls
+     */
+    public function testNotAuthenticated($method, $url)
+    {
+        $this->setBasicAuthentication(null, null);
+
+        $response = $this->makeRequest($method, $url, [])->client->getResponse();
+        $this->assertNotAuthenticated($response);
     }
 }
