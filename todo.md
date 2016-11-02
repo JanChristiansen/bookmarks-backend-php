@@ -17,23 +17,7 @@ patch/post category parent hinzufügen
 ---
 **ToDo**
 
-validation category checken
-
-validation bookmark checken
-
-testGetBookmarksAction besser machen
-
-remove validators
-
-userhandling in controller?
-
-test stabiler machen?
-
-routing.xml ins bundle
-
 100% coverage
-
-bm controller aufräumen
 
 composer update
 
