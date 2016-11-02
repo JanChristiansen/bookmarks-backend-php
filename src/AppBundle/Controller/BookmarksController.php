@@ -77,7 +77,7 @@ class BookmarksController extends AbstractController
      */
     public function getBookmarkAction(Bookmark $bookmark)
     {
-        $this->checkBookmarkOwner($bookmark);
+        $this->checkLoggedInUserIsBookmarkOwner($bookmark);
 
         return $bookmark;
     }
@@ -95,7 +95,7 @@ class BookmarksController extends AbstractController
      */
     public function deleteBookmarkAction(Bookmark $bookmark)
     {
-        $this->checkBookmarkOwner($bookmark);
+        $this->checkLoggedInUserIsBookmarkOwner($bookmark);
         $this->bookmarkRepository->delete($bookmark);
     }
 
@@ -126,7 +126,7 @@ class BookmarksController extends AbstractController
             return View::create($form, Response::HTTP_BAD_REQUEST);
         }
 
-        $this->checkCategoryOwner($bookmark->getCategory());
+        $this->checkLoggedInUserIsCategoryOwner($bookmark->getCategory());
 
         $bookmark->setUser($this->getUser());
         $this->bookmarkRepository->save($bookmark);
@@ -153,36 +153,16 @@ class BookmarksController extends AbstractController
      */
     public function patchBookmarkAction(Bookmark $bookmark, Request $request)
     {
-        $this->checkBookmarkOwner($bookmark);
+        $this->checkLoggedInUserIsBookmarkOwner($bookmark);
 
         $form = $this->createForm(BookmarkFormType::class, $bookmark, ['method' => Request::METHOD_PATCH]);
         if (!$this->handleForm($form, $request)) {
             return View::create($form, Response::HTTP_BAD_REQUEST);
         }
 
-        $this->checkCategoryOwner($bookmark->getCategory());
+        $this->checkLoggedInUserIsCategoryOwner($bookmark->getCategory());
         $this->bookmarkRepository->save($bookmark);
 
         return $this->view(null, Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @param Bookmark $bookmark
-     */
-    private function checkBookmarkOwner(Bookmark $bookmark)
-    {
-        if (!$bookmark->isOwner($this->getUser())) {
-            throw $this->createAccessDeniedException();
-        }
-    }
-
-    /**
-     * @param Category $category
-     */
-    private function checkCategoryOwner(Category $category)
-    {
-        if (!$category->isOwner($this->getUser())) {
-            throw $this->createAccessDeniedException();
-        }
     }
 }

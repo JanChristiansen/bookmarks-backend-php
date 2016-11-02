@@ -79,7 +79,7 @@ class CategoriesController extends AbstractController
      */
     public function getCategoryAction(Category $category)
     {
-        $this->checkCategoryOwner($category);
+        $this->checkLoggedInUserIsCategoryOwner($category);
 
         return $category;
     }
@@ -97,7 +97,7 @@ class CategoriesController extends AbstractController
      */
     public function deleteCategoryAction(Category $category)
     {
-        $this->checkCategoryOwner($category);
+        $this->checkLoggedInUserIsCategoryOwner($category);
         $this->categoryRepository->delete($category);
     }
 
@@ -126,7 +126,7 @@ class CategoriesController extends AbstractController
         $category = new Category();
         $form = $this->createForm(CategoryFormType::class, $category, ['user' => $this->getUser()]);
         if ($this->handleForm($form, $request)) {
-            $this->checkCategoryOwner($category->getParent());
+            $this->checkLoggedInUserIsCategoryOwner($category->getParent());
             $category->setUser($this->getUser());
             $this->categoryRepository->save($category);
 
@@ -155,7 +155,7 @@ class CategoriesController extends AbstractController
      */
     public function patchCategoryAction(Category $category, Request $request)
     {
-        $this->checkCategoryOwner($category);
+        $this->checkLoggedInUserIsCategoryOwner($category);
 
         $form = $this->createForm(
             CategoryFormType::class,
@@ -163,7 +163,7 @@ class CategoriesController extends AbstractController
             ['method' => Request::METHOD_PATCH, 'user' => $this->getUser()]
         );
         if ($this->handleForm($form, $request)) {
-            $this->checkCategoryOwner($category->getParent());
+            $this->checkLoggedInUserIsCategoryOwner($category->getParent());
             $this->categoryRepository->save($category);
 
             return $this->view(null, Response::HTTP_NO_CONTENT);
@@ -172,13 +172,4 @@ class CategoriesController extends AbstractController
         return View::create($form, Response::HTTP_BAD_REQUEST);
     }
 
-    /**
-     * @param Category $category
-     */
-    private function checkCategoryOwner(Category $category)
-    {
-        if (!$category->isOwner($this->getUser())) {
-            throw $this->createAccessDeniedException();
-        }
-    }
 }
