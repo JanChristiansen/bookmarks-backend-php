@@ -37,6 +37,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    autoescape: "name"
 
 # Doctrine Configuration
 doctrine:
@@ -68,7 +69,7 @@ doctrine:
     #           is_bundle: false
 
 stof_doctrine_extensions:
-    default_locale: %locale%
+    default_locale: "%locale%"
     orm:
         default:
             tree: true
