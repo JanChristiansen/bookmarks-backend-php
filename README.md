@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/JanChristiansen/bookmarks-backend-php.svg?branch=master)](https://travis-ci.org/JanChristiansen/bookmarks-backend-php)
+
 This is the backend of my personal bookmark management tool.
 It's just a Symfony playing ground with a real usecase (at least for me).
 Maybe it works.. Maybe not.
