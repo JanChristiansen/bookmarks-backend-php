@@ -84,7 +84,7 @@ class CategoryEntityRepositoryTest extends WebTestCase
     {
         $user = new User();
 
-        $queryBuilder = $this->getMockWithoutInvokingTheOriginalConstructor(QueryBuilder::class);
+        $queryBuilder = $this->createMock(QueryBuilder::class);
         $queryBuilder->expects($this->once())
             ->method('where')
             ->with('c.user = :userId')

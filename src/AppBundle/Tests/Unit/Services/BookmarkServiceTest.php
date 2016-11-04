@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Unit;
+namespace AppBundle\Tests\Unit\Services;
 
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
@@ -40,7 +40,7 @@ class BookmarkServiceTest extends \PHPUnit_Framework_TestCase
 
         $children = array($firstChild, $secondChild);
 
-        $categoryRepository = $this->getMockWithoutInvokingTheOriginalConstructor(CategoryEntityRepository::class);
+        $categoryRepository = $this->createMock(CategoryEntityRepository::class);
         $categoryRepository->expects($this->once())->method('getChildren')->with($user->getRootCategory(), true)->willReturn($children);
 
         $service = new BookmarkService($categoryRepository);

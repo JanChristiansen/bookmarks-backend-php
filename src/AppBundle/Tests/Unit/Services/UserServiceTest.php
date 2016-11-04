@@ -27,8 +27,8 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->userRepository = $this->getMock(UserRepository::class);
-        $this->passwordEncoder = $this->getMock(UserPasswordEncoderInterface::class);
+        $this->userRepository = $this->createMock(UserRepository::class);
+        $this->passwordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
         $this->service = new UserService($this->userRepository, $this->passwordEncoder);
     }
 

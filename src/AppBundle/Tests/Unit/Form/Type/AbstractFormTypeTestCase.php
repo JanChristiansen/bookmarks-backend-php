@@ -58,7 +58,7 @@ class AbstractFormTypeTestCase extends TypeTestCase
      */
     protected function createRegistryMock($name, $em)
     {
-        $registry = $this->getMock(ManagerRegistry::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry->expects($this->any())
             ->method('getManager')
             ->with($this->equalTo($name))
