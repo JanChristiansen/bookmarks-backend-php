@@ -1,8 +1,6 @@
 **ToDo**
 
-composer update
-
-gravisci oder so
+coverage mit travis oder so
 
 php7
 
