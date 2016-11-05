@@ -1,5 +1,6 @@
 {
     "name": "smoon/bookmarks",
+    "description": "Bookmark backend written in PHP with Symfony Framework",
     "license": "Apache-2.0",
     "type": "project",
     "homepage": "https://github.com/JanChristiansen/bookmarks-backend-php",
