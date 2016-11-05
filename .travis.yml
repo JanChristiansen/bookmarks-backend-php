@@ -7,7 +7,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit --coverage-php build/cov/coverage-${component_name}.cov
+  - phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
   - travis_retry php vendor/bin/coveralls
