@@ -11,3 +11,6 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls -v
+
+after_failure:
+  - travis_retry php vendor/bin/coveralls -v
