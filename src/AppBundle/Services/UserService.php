@@ -4,7 +4,6 @@ namespace AppBundle\Services;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\CategoryRepository;
 use AppBundle\Interfaces\Repository\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 

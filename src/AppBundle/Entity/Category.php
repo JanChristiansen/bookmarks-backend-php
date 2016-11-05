@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
@@ -85,7 +84,7 @@ class Category
     private $parent;
 
     /**
-     * @var Category[]|Collection
+     * @var Category[]|\Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
@@ -94,7 +93,7 @@ class Category
     private $children;
 
     /**
-     * @var Bookmark[]|Collection
+     * @var Bookmark[]|\Doctrine\Common\Collections\Collection
      *
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      * @ORM\OneToMany(targetEntity="Bookmark", mappedBy="category")

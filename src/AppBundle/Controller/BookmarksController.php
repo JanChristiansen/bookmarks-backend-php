@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
-use AppBundle\Entity\User;
 use AppBundle\Form\Type\BookmarkFormType;
 use AppBundle\Interfaces\Repository\BookmarkRepository;
 use AppBundle\Services\BookmarkService;
@@ -13,7 +12,6 @@ use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class BookmarksController extends AbstractController
 {

@@ -6,14 +6,11 @@ use AppBundle\Entity\Category;
 use AppBundle\Form\Type\CategoryFormType;
 use AppBundle\Interfaces\Repository\CategoryRepository;
 use AppBundle\Services\BookmarkService;
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class CategoriesController extends AbstractController
 {
