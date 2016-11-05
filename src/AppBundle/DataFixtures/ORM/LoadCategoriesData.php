@@ -47,16 +47,7 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
         /** @var Category[] $children121 */
         $children121 = array();
         for ($i = 1; $i <= 2; $i++) {
-            $name = 'category-12-11-1' . $i;
-            $children121[$i] = new Category();
-            $children121[$i]->setName($name);
-            $children121[$i]->setParent($children12[1]);
-            $children121[$i]->setUser($this->getReference(LoadUsersData::REFERENCE));
-
-            $manager->persist($children121[$i]);
-            $this->addReference($name, $children121[$i]);
-
-            $children121[$i] = $this->createChildrenCategory($manager, 'category-12-1' . $i, $children12[1]);
+            $children121[$i] = $this->createChildrenCategory($manager, 'category-12-11-1' . $i, $children12[1]);
         }
 
 
