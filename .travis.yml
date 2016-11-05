@@ -10,6 +10,4 @@ script:
   - phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
-  - travis_retry php vendor/bin/coveralls
-  # or enable logging
   - travis_retry php vendor/bin/coveralls -v
