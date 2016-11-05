@@ -35,27 +35,13 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
         /** @var Category[] $children1 */
         $children1 = array();
         for ($i = 1; $i <= 2; $i++) {
-            $name = 'category-1' . $i;
-            $children1[$i] = new Category();
-            $children1[$i]->setName($name);
-            $children1[$i]->setParent($root);
-            $children1[$i]->setUser($this->getReference(LoadUsersData::REFERENCE));
-
-            $manager->persist($children1[$i]);
-            $this->addReference($name, $children1[$i]);
+            $children1[$i] = $this->createChildrenCategory($manager, 'category-1' . $i, $root);
         }
 
         /** @var Category[] $children12 */
         $children12 = array();
         for ($i = 1; $i <= 2; $i++) {
-            $name = 'category-12-1' . $i;
-            $children12[$i] = new Category();
-            $children12[$i]->setName($name);
-            $children12[$i]->setParent($children1[2]);
-            $children12[$i]->setUser($this->getReference(LoadUsersData::REFERENCE));
-
-            $manager->persist($children12[$i]);
-            $this->addReference($name, $children12[$i]);
+            $children12[$i] = $this->createChildrenCategory($manager, 'category-12-1' . $i, $children1[2]);
         }
 
         /** @var Category[] $children121 */
@@ -69,6 +55,8 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
 
             $manager->persist($children121[$i]);
             $this->addReference($name, $children121[$i]);
+
+            $children121[$i] = $this->createChildrenCategory($manager, 'category-12-1' . $i, $children12[1]);
         }
 
 
@@ -107,5 +95,24 @@ class LoadCategoriesData extends AbstractFixture implements OrderedFixtureInterf
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
         return self::ORDER;
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @param $name
+     * @param $parent
+     * @return Category
+     */
+    protected function createChildrenCategory(ObjectManager $manager, $name, $parent)
+    {
+        $children = new Category();
+        $children->setName($name);
+        $children->setParent($parent);
+        $children->setUser($this->getReference(LoadUsersData::REFERENCE));
+
+        $manager->persist($children);
+        $this->addReference($name, $children);
+
+        return $children;
     }
 }
