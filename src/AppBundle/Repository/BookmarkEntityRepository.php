@@ -3,10 +3,10 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Bookmark;
-use AppBundle\Interfaces\Repository\BookmarkRepository;
+use AppBundle\Interfaces\Repository\BookmarkRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
-class BookmarkEntityRepository extends EntityRepository implements BookmarkRepository
+class BookmarkEntityRepository extends EntityRepository implements BookmarkRepositoryInterface
 {
     /**
      * @param int $id

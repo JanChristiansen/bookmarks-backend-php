@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
 use AppBundle\Form\Type\BookmarkFormType;
-use AppBundle\Interfaces\Repository\BookmarkRepository;
+use AppBundle\Interfaces\Repository\BookmarkRepositoryInterface;
 use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BookmarksController extends AbstractController
 {
     /**
-     * @var BookmarkRepository
+     * @var BookmarkRepositoryInterface
      */
     private $bookmarkRepository;
 
@@ -26,10 +26,10 @@ class BookmarksController extends AbstractController
     private $bookmarkService;
 
     /**
-     * @param BookmarkRepository $bookmarkRepository
+     * @param BookmarkRepositoryInterface $bookmarkRepository
      * @param BookmarkService $bookmarkService
      */
-    public function __construct(BookmarkRepository $bookmarkRepository, BookmarkService $bookmarkService)
+    public function __construct(BookmarkRepositoryInterface $bookmarkRepository, BookmarkService $bookmarkService)
     {
         $this->bookmarkRepository = $bookmarkRepository;
         $this->bookmarkService = $bookmarkService;

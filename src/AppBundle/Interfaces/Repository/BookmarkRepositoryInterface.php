@@ -4,7 +4,7 @@ namespace AppBundle\Interfaces\Repository;
 
 use AppBundle\Entity\Bookmark;
 
-interface BookmarkRepository
+interface BookmarkRepositoryInterface
 {
     /**
      * @param int $id
