@@ -4,14 +4,14 @@ namespace AppBundle\Tests\Unit\Services;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\UserRepository;
+use AppBundle\Interfaces\Repository\UserRepositoryInterface;
 use AppBundle\Services\UserService;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var UserRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var UserRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $userRepository;
 
@@ -27,7 +27,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->userRepository = $this->createMock(UserRepository::class);
+        $this->userRepository = $this->createMock(UserRepositoryInterface::class);
         $this->passwordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
         $this->service = new UserService($this->userRepository, $this->passwordEncoder);
     }

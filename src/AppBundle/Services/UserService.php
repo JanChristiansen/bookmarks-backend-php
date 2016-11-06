@@ -4,13 +4,13 @@ namespace AppBundle\Services;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\UserRepository;
+use AppBundle\Interfaces\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService
 {
     /**
-     * @var UserRepository
+     * @var UserRepositoryInterface
      */
     private $userRepository;
     /**
@@ -19,10 +19,10 @@ class UserService
     private $passwordEncoder;
 
     /**
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserRepositoryInterface $userRepository, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;

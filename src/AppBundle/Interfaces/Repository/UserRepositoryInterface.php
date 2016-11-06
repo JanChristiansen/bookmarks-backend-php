@@ -7,7 +7,7 @@ use AppBundle\Entity\User;
 /**
  * UserEntityRepository
  */
-interface UserRepository
+interface UserRepositoryInterface
 {
     /**
      * @param int $id

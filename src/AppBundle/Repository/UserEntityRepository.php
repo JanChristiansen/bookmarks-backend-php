@@ -3,10 +3,10 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\UserRepository;
+use AppBundle\Interfaces\Repository\UserRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
-class UserEntityRepository extends EntityRepository implements UserRepository
+class UserEntityRepository extends EntityRepository implements UserRepositoryInterface
 {
     /**
      * @param int $id
