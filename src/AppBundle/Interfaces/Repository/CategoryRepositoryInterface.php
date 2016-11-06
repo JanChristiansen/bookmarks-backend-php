@@ -6,7 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 
-interface CategoryRepository extends \Gedmo\Tree\RepositoryInterface
+interface CategoryRepositoryInterface extends \Gedmo\Tree\RepositoryInterface
 {
     /**
      * @param int $id

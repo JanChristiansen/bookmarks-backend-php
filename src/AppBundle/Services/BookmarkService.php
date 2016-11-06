@@ -3,19 +3,19 @@
 namespace AppBundle\Services;
 
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\CategoryRepository;
+use AppBundle\Interfaces\Repository\CategoryRepositoryInterface;
 
 class BookmarkService
 {
     /**
-     * @var CategoryRepository
+     * @var CategoryRepositoryInterface
      */
     private $categoryRepository;
 
     /**
-     * @param CategoryRepository $categoryRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }

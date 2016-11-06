@@ -4,13 +4,13 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\CategoryRepository;
+use AppBundle\Interfaces\Repository\CategoryRepositoryInterface;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
-class CategoryEntityRepository extends NestedTreeRepository implements CategoryRepository
+class CategoryEntityRepository extends NestedTreeRepository implements CategoryRepositoryInterface
 {
 
     /**

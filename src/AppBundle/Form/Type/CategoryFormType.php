@@ -4,7 +4,7 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use AppBundle\Interfaces\Repository\CategoryRepository;
+use AppBundle\Interfaces\Repository\CategoryRepositoryInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,7 +24,7 @@ class CategoryFormType extends AbstractType
             EntityType::class,
             [
                 'class' => Category::class,
-                'query_builder' => function (CategoryRepository $repository) use ($user) {
+                'query_builder' => function (CategoryRepositoryInterface $repository) use ($user) {
                     return $repository->getCategoriesForUserQueryBuilder($user);
                 },
                 'choice_label' => function (Category $category) {

@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Form\Type\CategoryFormType;
-use AppBundle\Interfaces\Repository\CategoryRepository;
+use AppBundle\Interfaces\Repository\CategoryRepositoryInterface;
 use AppBundle\Services\BookmarkService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CategoriesController extends AbstractController
 {
     /**
-     * @var CategoryRepository
+     * @var CategoryRepositoryInterface
      */
     private $categoryRepository;
 
@@ -25,10 +25,10 @@ class CategoriesController extends AbstractController
     private $bookmarkService;
 
     /**
-     * @param CategoryRepository $categoryRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      * @param BookmarkService $bookmarkService
      */
-    public function __construct(CategoryRepository $categoryRepository, BookmarkService $bookmarkService)
+    public function __construct(CategoryRepositoryInterface $categoryRepository, BookmarkService $bookmarkService)
     {
         $this->categoryRepository = $categoryRepository;
         $this->bookmarkService = $bookmarkService;
