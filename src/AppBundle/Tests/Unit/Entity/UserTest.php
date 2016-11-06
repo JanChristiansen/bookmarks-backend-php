@@ -14,13 +14,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $user = new User();
         $user->setId(1);
-        $user->setIsActive(false);
+        $user->setActive(false);
         $user->setPassword('secret');
         $user->setRootCategory($root);
         $user->setUsername('super');
 
         $this->assertEquals(1, $user->getId());
-        $this->assertEquals(false, $user->getIsActive());
+        $this->assertEquals(false, $user->isActive());
         $this->assertEquals('secret', $user->getPassword());
         $this->assertEquals($root, $user->getRootCategory());
         $this->assertEquals('super', $user->getUsername());
