@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Tests\Functional\Controller;
+namespace AppBundle\Tests\Controller;
 
 use AppBundle\Controller\CategoriesController;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
-use AppBundle\Tests\Functional\WebTestCase;
+use AppBundle\Tests\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,7 @@ class CategoriesControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $this->client = static::createClient(array('debug' => false));
+        parent::setUp();
 
         $this->fixtures = $this
             ->loadFixtures(array(LoadUsersData::class, LoadCategoriesData::class))
@@ -266,29 +266,5 @@ class CategoriesControllerTest extends WebTestCase
         $expectedResponse = '{"code":400,"message":"Validation Failed","errors":{"children":{"name":{},"parent":{"errors":["This value is not valid."]}}}}';
         $this->assertEquals($expectedResponse, $response->getContent());
         $this->assertStatusCodeInResponse($response, Response::HTTP_BAD_REQUEST);
-    }
-
-    public function provideUrls()
-    {
-        return [
-            ['GET', '/categories/1'],
-            ['GET', '/categories'],
-            ['DELETE', '/categories/1'],
-            ['POST', '/categories'],
-            ['PATCH', '/categories/1'],
-        ];
-    }
-
-    /**
-     * @param string $method
-     * @param string $url
-     * @dataProvider provideUrls
-     */
-    public function testNotAuthenticated($method, $url)
-    {
-        $this->setBasicAuthentication(null, null);
-
-        $response = $this->makeRequest($method, $url, [])->client->getResponse();
-        $this->assertNotAuthenticated($response);
     }
 }

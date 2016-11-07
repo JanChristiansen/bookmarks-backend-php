@@ -1,31 +1,35 @@
 <?php
 
-namespace AppBundle\Tests\Unit\Form\Type;
+namespace AppBundle\Tests\Form\Type;
 
+use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
-use AppBundle\Entity\User;
-use AppBundle\Form\Type\CategoryFormType;
-use Symfony\Component\Form\Test\TypeTestCase;
+use AppBundle\Form\Type\BookmarkFormType;
 
-class CategoryFormTypeTest extends AbstractFormTypeTestCase
+class BookmarkFormTypeTest extends AbstractFormTypeTestCase
 {
     public function testSubmitValidData()
     {
+        $category = new Category();
+        $category->setName('super category');
+        $this->persist($category);
+        $id = $category->getId();
+
         $formData = array(
             'name' => 'blablabla',
-            'parent' => 123
+            'category' => $id
         );
 
-        $form = $this->factory->create(CategoryFormType::class, null, ['user' => new User()]);
+        $form = $this->factory->create(BookmarkFormType::class);
 
-        $object = new Category();
-        $object->setName('blablabla');
+        $expectedBookmark = new Bookmark();
+        $expectedBookmark->setName('blablabla');
+        $expectedBookmark->setCategory($category);
 
-        // submit the data to the form directly
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($object, $form->getData());
+        $this->assertEquals($expectedBookmark, $form->getData());
 
         $view = $form->createView();
         $children = $view->children;
@@ -37,7 +41,7 @@ class CategoryFormTypeTest extends AbstractFormTypeTestCase
 
     public function testGetBlockPrefix()
     {
-        $formType = new CategoryFormType();
+        $formType = new BookmarkFormType();
         $this->assertEquals('', $formType->getBlockPrefix());
     }
 

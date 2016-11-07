@@ -1,10 +1,8 @@
 <?php
 
-namespace AppBundle\Tests\Functional\Repository;
+namespace AppBundle\Tests\Repository;
 
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
-use AppBundle\DataFixtures\ORM\LoadFullTreeBookmarksData;
-use AppBundle\DataFixtures\ORM\LoadFullTreeCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;

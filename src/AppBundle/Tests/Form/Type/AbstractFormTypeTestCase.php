@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Unit\Form\Type;
+namespace AppBundle\Tests\Form\Type;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;

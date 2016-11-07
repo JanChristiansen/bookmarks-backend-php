@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Functional;
+namespace AppBundle\Tests;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase as LiipWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -23,6 +23,11 @@ class WebTestCase extends LiipWebTestCase
      * @var array
      */
     protected $server = array();
+
+    public function setUp()
+    {
+        $this->client = static::createClient(array('debug' => false));
+    }
 
     /**
      * @param string $url

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Unit;
+namespace AppBundle\Tests;
 
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
