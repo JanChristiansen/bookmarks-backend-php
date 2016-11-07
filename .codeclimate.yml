@@ -23,5 +23,6 @@ ratings:
   - "**.rb"
 exclude_paths:
   - "vendor/**/*"
-  - "vendor/**/*"
+  - "var/**/*"
+  - "src/**/Tests/**"
   - "app/DoctrineMigrations/**"
