@@ -34,19 +34,19 @@ class LoadFullTreeCategoriesData extends AbstractFixture implements OrderedFixtu
         /** @var Category[] $children12 */
         $children12 = array();
         for ($i = 1; $i <= 3; $i++) {
-            $children12[$i] = $this->createChildCategory($manager, 'category-12-1' . $i, $root);
+            $children12[$i] = $this->createChildCategory($manager, 'category-12-1' . $i, $children1[2]);
         }
 
         /** @var Category[] $children13 */
         $children13 = array();
         for ($i = 1; $i <= 3; $i++) {
-            $children13[$i] = $this->createChildCategory($manager, 'category-13-1' . $i, $root);
+            $children13[$i] = $this->createChildCategory($manager, 'category-13-1' . $i, $children1[3]);
         }
 
         /** @var Category[] $children131 */
         $children131 = array();
         for ($i = 1; $i <= 2; $i++) {
-            $children131[$i] = $this->createChildCategory($manager, 'category-13-11-1' . $i, $root);
+            $children131[$i] = $this->createChildCategory($manager, 'category-13-11-1' . $i, $children13[1]);
         }
 
         $manager->flush();
