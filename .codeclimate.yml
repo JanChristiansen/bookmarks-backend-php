@@ -24,5 +24,4 @@ ratings:
 exclude_paths:
   - "vendor/**/*"
   - "var/**/*"
-  - "src/**/Tests/**"
   - "app/DoctrineMigrations/**"
