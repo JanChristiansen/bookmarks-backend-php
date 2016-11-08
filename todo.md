@@ -1,6 +1,7 @@
 **ToDo**
+better command test 
 
-php7
+push up coverage
 
 api best practices
 
