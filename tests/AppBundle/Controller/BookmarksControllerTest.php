@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Controller;
+namespace Tests\AppBundle\Controller;
 
 use AppBundle\Controller\BookmarksController;
 use AppBundle\DataFixtures\ORM\LoadBookmarksData;
@@ -11,11 +11,11 @@ use AppBundle\DataFixtures\ORM\LoadFullTreeUsersData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
-use AppBundle\Tests\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\AppBundle\AbstractWebTestCase;
 
-class BookmarksControllerTest extends WebTestCase
+class BookmarksControllerTest extends AbstractWebTestCase
 {
     /**
      * @var ReferenceRepository

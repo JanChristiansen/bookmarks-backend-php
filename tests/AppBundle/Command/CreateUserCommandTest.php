@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Command;
+namespace Tests\AppBundle\Command;
 
 use AppBundle\Command\CreateUserCommand;
 use AppBundle\DataFixtures\ORM\LoadUsersData;

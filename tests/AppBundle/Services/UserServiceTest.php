@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Services;
+namespace Tests\AppBundle\Services;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;

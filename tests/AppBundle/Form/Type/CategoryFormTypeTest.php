@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Tests\Form\Type;
+namespace Tests\AppBundle\Form\Type;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\CategoryFormType;
-use Symfony\Component\Form\Test\TypeTestCase;
+use Tests\AppBundle\AbstractFormTypeTestCase;
 
 class CategoryFormTypeTest extends AbstractFormTypeTestCase
 {

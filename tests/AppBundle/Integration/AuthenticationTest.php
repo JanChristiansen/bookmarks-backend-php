@@ -1,8 +1,10 @@
 <?php
 
-namespace AppBundle\Tests;
+namespace Tests\AppBundle\Integration;
 
-class AuthenticationTest extends WebTestCase
+use Tests\AppBundle\AbstractWebTestCase;
+
+class AuthenticationTest extends AbstractWebTestCase
 {
     public function setUp()
     {

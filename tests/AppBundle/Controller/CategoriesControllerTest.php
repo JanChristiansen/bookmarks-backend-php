@@ -1,17 +1,16 @@
 <?php
 
-namespace AppBundle\Tests\Controller;
+namespace Tests\AppBundle\Controller;
 
 use AppBundle\Controller\CategoriesController;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
-use AppBundle\Entity\User;
-use AppBundle\Tests\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\AppBundle\AbstractWebTestCase;
 
-class CategoriesControllerTest extends WebTestCase
+class CategoriesControllerTest extends AbstractWebTestCase
 {
     /**
      * @var ReferenceRepository

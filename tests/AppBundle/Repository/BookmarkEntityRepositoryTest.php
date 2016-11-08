@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Repository;
+namespace Tests\AppBundle\Repository;
 
 use AppBundle\DataFixtures\ORM\LoadBookmarksData;
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
@@ -9,9 +9,9 @@ use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Bookmark;
 use AppBundle\Repository\BookmarkEntityRepository;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Tests\AppBundle\AbstractWebTestCase;
 
-class BookmarkEntityRepositoryTest extends WebTestCase
+class BookmarkEntityRepositoryTest extends AbstractWebTestCase
 {
     /**
      * @var BookmarkEntityRepository

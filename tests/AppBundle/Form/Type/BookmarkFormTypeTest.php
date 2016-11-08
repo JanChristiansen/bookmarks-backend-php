@@ -1,10 +1,11 @@
 <?php
 
-namespace AppBundle\Tests\Form\Type;
+namespace Tests\AppBundle\Form\Type;
 
 use AppBundle\Entity\Bookmark;
 use AppBundle\Entity\Category;
 use AppBundle\Form\Type\BookmarkFormType;
+use Tests\AppBundle\AbstractFormTypeTestCase;
 
 class BookmarkFormTypeTest extends AbstractFormTypeTestCase
 {

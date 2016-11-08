@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Tests;
+namespace Tests\AppBundle;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase as LiipWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 
-class WebTestCase extends LiipWebTestCase
+abstract class AbstractWebTestCase extends LiipWebTestCase
 {
     /**
      * @var Client
@@ -34,7 +34,7 @@ class WebTestCase extends LiipWebTestCase
      * @param array $queryParameters
      * @param array $files
      * @param array $server
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function makeGetRequest($url, array $queryParameters = array(), $files = array(), $server = array())
     {
@@ -46,7 +46,7 @@ class WebTestCase extends LiipWebTestCase
      * @param array $queryParameters
      * @param array $files
      * @param array $server
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function makePatchRequest($url, array $queryParameters = array(), $files = array(), $server = array())
     {
@@ -58,7 +58,7 @@ class WebTestCase extends LiipWebTestCase
      * @param array $queryParameters
      * @param array $files
      * @param array $server
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function makePostRequest($url, array $queryParameters = array(), $files = array(), $server = array())
     {
@@ -70,7 +70,7 @@ class WebTestCase extends LiipWebTestCase
      * @param array $queryParameters
      * @param array $files
      * @param array $server
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function makeDeleteRequest($url, array $queryParameters = array(), $files = array(), $server = array())
     {
@@ -83,7 +83,7 @@ class WebTestCase extends LiipWebTestCase
      * @param $queryParameters
      * @param $files
      * @param $server
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function makeRequest($requestType, $url, $queryParameters, $files = array(), $server = array())
     {
@@ -97,7 +97,7 @@ class WebTestCase extends LiipWebTestCase
     /**
      * @param string $userName
      * @param string $password
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function setBasicAuthentication($userName, $password)
     {
@@ -108,7 +108,7 @@ class WebTestCase extends LiipWebTestCase
     }
 
     /**
-     * @return WebTestCase
+     * @return AbstractWebTestCase
      */
     protected function clearBasicAuthentication()
     {

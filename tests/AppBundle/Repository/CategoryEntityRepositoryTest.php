@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Repository;
+namespace Tests\AppBundle\Repository;
 
 use AppBundle\DataFixtures\ORM\LoadCategoriesData;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
@@ -9,9 +9,9 @@ use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryEntityRepository;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
 use Doctrine\ORM\QueryBuilder;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Tests\AppBundle\AbstractWebTestCase;
 
-class CategoryEntityRepositoryTest extends WebTestCase
+class CategoryEntityRepositoryTest extends AbstractWebTestCase
 {
     /**
      * @var CategoryEntityRepository

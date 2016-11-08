@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Form\Type;
+namespace Tests\AppBundle;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
 use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class AbstractFormTypeTestCase extends TypeTestCase
+abstract class AbstractFormTypeTestCase extends TypeTestCase
 {
     /**
      * @var EntityManager

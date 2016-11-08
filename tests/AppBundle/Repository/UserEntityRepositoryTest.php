@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Tests\Repository;
+namespace Tests\AppBundle\Repository;
 
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserEntityRepository;
-use AppBundle\Tests\WebTestCase;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Tests\AppBundle\AbstractWebTestCase;
 
-class UserEntityRepositoryTest extends WebTestCase
+class UserEntityRepositoryTest extends AbstractWebTestCase
 {
     /**
      * @var UserEntityRepository
