@@ -4,6 +4,7 @@ php:
   - '7.0'
 
 env:
+  - PHPUNIT_OPTION=""
   - PHPUNIT_OPTION="--coverage-clover build/logs/clover.xml"
 
 addons:
