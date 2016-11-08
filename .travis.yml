@@ -8,12 +8,8 @@ env:
   - PHPUNIT_OPTION="--coverage-clover build/logs/clover.xml"
 
 matrix:
-  include:
+  exclude:
     - php: 5.6
-      env: PHPUNIT_OPTION=""
-    - php: 7
-      env: PHPUNIT_OPTION=""
-    - php: 7
       env: PHPUNIT_OPTION="--coverage-clover build/logs/clover.xml"
 
 addons:
