@@ -37,15 +37,15 @@ class CategoryEntityRepository extends NestedTreeRepository implements CategoryR
      */
     public function delete($category)
     {
-        $this->_em->beginTransaction();
+        $this->getEntityManager()->beginTransaction();
         try {
             $category = $this->find($category->getId(), LockMode::PESSIMISTIC_WRITE);
-            $this->_em->remove($category);
-            $this->_em->flush();
-            $this->_em->commit();
-            $this->_em->clear();
+            $this->getEntityManager()->remove($category);
+            $this->getEntityManager()->flush();
+            $this->getEntityManager()->commit();
+            $this->getEntityManager()->clear();
         } catch (Exception $e) {
-            $this->_em->rollback();
+            $this->getEntityManager()->rollback();
             throw $e;
         }
     }

@@ -8,7 +8,10 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryEntityRepository;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Gedmo\Tree\TreeListener;
+use Symfony\Bridge\Doctrine\Test\DoctrineTestHelper;
 use Tests\AppBundle\AbstractWebTestCase;
 
 class CategoryEntityRepositoryTest extends AbstractWebTestCase
@@ -76,6 +79,35 @@ class CategoryEntityRepositoryTest extends AbstractWebTestCase
         $this->assertEquals($category->getId(), $saved->getId());
         $this->assertEquals($category->getName(), $saved->getName());
         $this->assertEquals($category->getUser()->getId(), $saved->getUser()->getId());
+    }
+
+    public function testDelete()
+    {
+        $actual = $this->repository->get(LoadCategoriesData::ROOT_ID);
+        $this->repository->delete($actual);
+        $actual = $this->repository->get(LoadCategoriesData::ROOT_ID);
+
+        $this->assertNull($actual);
+    }
+
+    public function testDeleteException()
+    {
+        $entityManager = DoctrineTestHelper::createTestEntityManager();
+
+        /** @var CategoryEntityRepository|\PHPUnit_Framework_MockObject_MockObject $repository */
+        $repository = $this->getMockBuilder(CategoryEntityRepository::class)
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->setMethods(['find', 'getEntityManager'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $repository->expects($this->once())->method('find')->willThrowException(new \Exception());
+        $repository->expects($this->any())->method('getEntityManager')->willReturn($entityManager);
+
+        $this->expectException(\Exception::class);
+        $repository->delete(new Category());
     }
 
     public function testGetCategoriesForUserQueryBuilder()
