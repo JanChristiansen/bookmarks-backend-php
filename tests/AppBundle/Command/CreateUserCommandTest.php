@@ -6,7 +6,6 @@ use AppBundle\Command\CreateUserCommand;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CreateUserCommandTest extends WebTestCase
@@ -33,7 +32,7 @@ class CreateUserCommandTest extends WebTestCase
         $this->loadFixtures(array(LoadUsersData::class));
     }
 
-    public function testExecuteWithoutPassword()
+    public function testExecuteAskForPassword()
     {
         $helper = $this->command->getHelper('question');
         $helper->setInputStream($this->getInputStream("Test\n"));
@@ -53,7 +52,7 @@ class CreateUserCommandTest extends WebTestCase
         $this->assertContains('You can now login with atr', $output);
     }
 
-    public function testExecuteWithPassword()
+    public function testExecuteWithPasswordOption()
     {
         $this->commandTester->execute(
             array(
