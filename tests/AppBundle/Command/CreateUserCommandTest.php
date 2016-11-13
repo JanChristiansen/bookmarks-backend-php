@@ -6,6 +6,7 @@ use AppBundle\Command\CreateUserCommand;
 use AppBundle\DataFixtures\ORM\LoadUsersData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CreateUserCommandTest extends WebTestCase
@@ -38,18 +39,31 @@ class CreateUserCommandTest extends WebTestCase
         $helper->setInputStream($this->getInputStream("Test\n"));
 
         $this->commandTester->execute(
-            array(
+            [
                 'command' => $this->command->getName(),
                 'username' => 'atr',
-            )
+            ]
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertContains('Please enter password: ', $output);
-        $this->assertContains('User with root category node created.', $output);
-        $this->assertContains('Username: atr', $output);
-        $this->assertContains('ID: ', $output);
-        $this->assertContains('You can now login with atr', $output);
+        $this->askForPasswordAssertions($output);
+    }
+
+    public function testExecuteAskForPasswordEmpty()
+    {
+        $helper = $this->command->getHelper('question');
+        $helper->setInputStream($this->getInputStream("\nTest\n"));
+
+        $this->commandTester->execute(
+            [
+                'command' => $this->command->getName(),
+                'username' => 'atr',
+            ]
+        );
+
+        $output = $this->commandTester->getDisplay();
+        $this->askForPasswordAssertions($output);
+        $this->assertContains('The password can not be empty', $output);
     }
 
     public function testExecuteWithPasswordOption()
@@ -77,5 +91,17 @@ class CreateUserCommandTest extends WebTestCase
         rewind($stream);
 
         return $stream;
+    }
+
+    /**
+     * @param $output
+     */
+    protected function askForPasswordAssertions($output)
+    {
+        $this->assertContains('Please enter password: ', $output);
+        $this->assertContains('User with root category node created.', $output);
+        $this->assertContains('Username: atr', $output);
+        $this->assertContains('ID: ', $output);
+        $this->assertContains('You can now login with atr', $output);
     }
 }
